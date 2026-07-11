@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/services", tags=["services"])
 
 @router.get("", response_model=list[ServiceOut])
 @limiter.limit("30/minute")
-def list_services(request: Request, db: Session = Depends(get_db)):
+def list_services(request: Request, response: Response, db: Session = Depends(get_db)):
     return db.scalars(
         select(Service).where(Service.public.is_(True)).order_by(Service.display_order, Service.id)
     ).all()

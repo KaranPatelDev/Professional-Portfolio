@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 @router.post("/contact", response_model=ContactOut)
 @limiter.limit("5/minute")
-def submit_contact(request: Request, body: ContactCreate, db: Session = Depends(get_db)):
+def submit_contact(request: Request, response: Response, body: ContactCreate, db: Session = Depends(get_db)):
     if body.website:
         # honeypot field was filled in — silently pretend success, drop the submission
         raise HTTPException(400, "Invalid submission")

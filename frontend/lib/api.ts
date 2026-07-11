@@ -53,6 +53,30 @@ export const getBuildLogCommits = (slug: string) => apiFetch<GitCommit[]>(`/api/
 export const getWhoami = () => apiFetch<Whoami>("/api/whoami");
 export const getBackendStatus = () => apiFetch<BackendStatus>("/api/status");
 
+export type RateLimitDemoResult = {
+  ok: boolean;
+  status: number;
+  limit: number | null;
+  remaining: number | null;
+  retryAfter: number | null;
+};
+
+// Deliberately bypasses apiFetch (which throws on non-2xx) — a 429 here is
+// an expected, meaningful result to display, not an error to swallow.
+export async function hitRateLimitDemo(): Promise<RateLimitDemoResult> {
+  const res = await fetch(`${API_URL}/api/demo/rate-limit`, { cache: "no-store" });
+  const limit = res.headers.get("X-RateLimit-Limit");
+  const remaining = res.headers.get("X-RateLimit-Remaining");
+  const retryAfter = res.headers.get("Retry-After");
+  return {
+    ok: res.ok,
+    status: res.status,
+    limit: limit ? Number(limit) : null,
+    remaining: remaining ? Number(remaining) : null,
+    retryAfter: retryAfter ? Number(retryAfter) : null,
+  };
+}
+
 // ---- Public writes ----
 export const submitContact = (body: {
   name: string;

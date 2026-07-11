@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/experience", tags=["experience"])
 
 @router.get("", response_model=list[ExperienceOut])
 @limiter.limit("30/minute")
-def list_experience(request: Request, db: Session = Depends(get_db)):
+def list_experience(request: Request, response: Response, db: Session = Depends(get_db)):
     return db.scalars(select(Experience).order_by(Experience.display_order, Experience.id)).all()
 
 
