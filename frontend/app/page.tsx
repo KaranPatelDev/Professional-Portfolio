@@ -38,38 +38,42 @@ export default async function Home() {
   const allStack = Array.from(new Set(projects.flatMap((p) => p.stack))).slice(0, 16);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6">
-      {/* Hero */}
-      <section className="relative py-16 sm:py-24 xl:py-32 grid gap-8 xl:grid-cols-[1.3fr_1fr] items-center overflow-hidden">
+    <div className="w-full">
+      {/* Hero — full-bleed background (glow + dot-grid span the entire viewport
+          width), content constrained to a readable column inside it. */}
+      <section className="relative w-full overflow-hidden">
         <div className="hero-glow" />
-        <div className="absolute inset-x-0 top-0 h-full bg-dot-grid pointer-events-none" />
-        <Reveal className="relative z-10">
-          {availability && (
-            <div className="inline-flex items-center gap-2 text-sm text-text-secondary mb-5 bg-surface/80 border border-border rounded-full px-3 py-1">
-              <StatusDot live />
-              <span>{availability.status_text}</span>
+        <div className="absolute inset-0 bg-dot-grid pointer-events-none" />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-24 xl:py-32 grid gap-8 xl:grid-cols-[1.3fr_1fr] items-center">
+          <Reveal className="relative z-10">
+            {availability && (
+              <div className="inline-flex items-center gap-2 text-sm text-text-secondary mb-5 bg-surface/80 border border-border rounded-full px-3 py-1">
+                <StatusDot live />
+                <span>{availability.status_text}</span>
+              </div>
+            )}
+            <div className="hero-headline">
+              <RichText html={heroHeadline} />
             </div>
-          )}
-          <div className="hero-headline">
-            <RichText html={heroHeadline} />
-          </div>
-          <div className="hero-supporting mt-3 max-w-md">
-            <RichText html={heroSupporting} />
-          </div>
-          <div className="flex flex-wrap gap-3 mt-8">
-            <PrimaryButton href="/resume">View Resume</PrimaryButton>
-            <GhostButton href="/projects/dnd-purchase">See D&amp;D Purchase &rarr;</GhostButton>
-          </div>
-        </Reveal>
-        <Reveal delay={0.15} className="relative z-10">
-          <Card featured>
-            <RequestFlowDiagram />
-          </Card>
-        </Reveal>
+            <div className="hero-supporting mt-3 max-w-md">
+              <RichText html={heroSupporting} />
+            </div>
+            <div className="flex flex-wrap gap-3 mt-8">
+              <PrimaryButton href="/resume">View Resume</PrimaryButton>
+              <GhostButton href="/projects/dnd-purchase">See D&amp;D Purchase &rarr;</GhostButton>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15} className="relative z-10">
+            <Card featured>
+              <RequestFlowDiagram />
+            </Card>
+          </Reveal>
+        </div>
       </section>
 
       {/* Bento panel: stats, experience, featured project, stack, freelance CTA */}
-      <section className="py-10 border-t border-border">
+      <section className="w-full py-10 border-t border-border">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <BentoGrid>
           <BentoCell span="1x1">
             <Reveal>
@@ -174,6 +178,7 @@ export default async function Home() {
             </BentoCell>
           )}
         </BentoGrid>
+        </div>
       </section>
     </div>
   );
