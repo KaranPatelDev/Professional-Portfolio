@@ -58,14 +58,14 @@ export default function CommandPalette() {
       onOpenChange={setOpen}
       label="Command palette"
       overlayClassName="fixed inset-0 z-[100] bg-black/50"
-      contentClassName="fixed top-24 left-1/2 -translate-x-1/2 w-full max-w-lg mx-4 glass-surface border border-border rounded-[var(--radius-card)] overflow-hidden shadow-2xl"
+      contentClassName="fixed top-24 left-1/2 -translate-x-1/2 z-[101] w-full max-w-lg mx-4 max-h-[70vh] flex flex-col glass-surface border border-border rounded-[var(--radius-card)] overflow-hidden shadow-2xl"
     >
       <CommandInput
         autoFocus
         placeholder="Search projects, stack, services, or actions…"
-        className="w-full px-4 py-3 bg-transparent border-b border-border text-text-primary placeholder:text-text-secondary focus:outline-none"
+        className="w-full shrink-0 px-4 py-3 bg-transparent border-b border-border text-text-primary placeholder:text-text-secondary focus:outline-none"
       />
-      <CommandList className="max-h-96 overflow-y-auto p-2">
+      <CommandList className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-2">
         <CommandEmpty className="text-text-secondary text-sm px-3 py-4 text-center">
           No results found.
         </CommandEmpty>

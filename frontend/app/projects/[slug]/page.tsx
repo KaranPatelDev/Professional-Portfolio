@@ -36,7 +36,7 @@ export default async function ProjectPage({ params }: Props) {
       <ScrollProgress />
       <Reveal>
         <div className="flex items-center gap-2 mb-4">
-          <Tag>{project.tags.replace("_", " ")}</Tag>
+          <Tag>{project.category}</Tag>
           <Tag>{project.status}</Tag>
           {project.body_html && <span className="text-xs text-text-secondary font-mono">{estimateReadingTime(project.body_html)}</span>}
         </div>

@@ -117,13 +117,22 @@ SERVICES = [
         display_order=1,
     ),
     dict(
+        name="Fullstack mobile & web applications",
+        client_problem="I need a mobile or web app built end-to-end",
+        deliverable="Cross-platform mobile app or responsive web app, deployed",
+        stack=["React Native", "Next.js", "React", "FastAPI"],
+        proof="D&D Purchase, NGO Health App",
+        public=True,
+        display_order=2,
+    ),
+    dict(
         name="Custom business applications",
         client_problem="We manage things in spreadsheets/email",
         deliverable="Structured internal tool",
         stack=["Full stack"],
         proof="D&D Purchase",
         public=True,
-        display_order=2,
+        display_order=3,
     ),
     dict(
         name="AI product integration",
@@ -132,7 +141,7 @@ SERVICES = [
         stack=["Gemini API", "vector DBs", "embeddings"],
         proof="AI Product Manager, Dev Interviewer",
         public=True,
-        display_order=3,
+        display_order=4,
     ),
     dict(
         name="Workflow automation",
@@ -141,7 +150,7 @@ SERVICES = [
         stack=["Celery", "Redis", "RabbitMQ"],
         proof="Internship experience",
         public=True,
-        display_order=4,
+        display_order=5,
     ),
     dict(
         name="Database optimization",
@@ -150,7 +159,7 @@ SERVICES = [
         stack=["PostgreSQL", "MySQL", "MongoDB"],
         proof="~30% improvement metric",
         public=True,
-        display_order=5,
+        display_order=6,
     ),
 ]
 

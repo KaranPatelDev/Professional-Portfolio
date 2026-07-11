@@ -111,7 +111,7 @@ export default async function Home() {
                 <Link href={`/projects/${featuredProject.slug}`} className="block h-full">
                   <Card featured className="h-full">
                     <div className="flex items-center gap-2 mb-3">
-                      <Tag>{featuredProject.tags.replace("_", " ")}</Tag>
+                      <Tag>{featuredProject.category}</Tag>
                       <Tag>{featuredProject.status}</Tag>
                     </div>
                     <h3 className="font-heading text-xl mb-2">{featuredProject.title}</h3>

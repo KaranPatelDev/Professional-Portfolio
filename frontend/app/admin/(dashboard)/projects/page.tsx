@@ -30,7 +30,7 @@ export default function AdminProjectsPage() {
               <Link href={`/admin/projects/${p.id}`} className="block h-full">
                 <Card className="h-full">
                   <div className="flex items-center gap-2 mb-1">
-                    <Tag>{p.tags}</Tag>
+                    <Tag>{p.category}</Tag>
                     <Tag>{p.status}</Tag>
                     {p.featured && <Tag>featured</Tag>}
                   </div>
