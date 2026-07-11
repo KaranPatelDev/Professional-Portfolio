@@ -26,6 +26,8 @@ def verify_admin_credentials(username: str, password: str) -> bool:
 
 
 def issue_session_cookie(response: Response) -> None:
+    # samesite="none" is required because the admin panel (Next.js) and this API
+    # live on different domains — the browser treats admin fetch calls as cross-site.
     token = _serializer.dumps({"user": settings.admin_username})
     response.set_cookie(
         key=SESSION_COOKIE,
@@ -33,7 +35,7 @@ def issue_session_cookie(response: Response) -> None:
         max_age=SESSION_MAX_AGE,
         httponly=True,
         secure=True,
-        samesite="lax",
+        samesite="none",
         path="/",
     )
 

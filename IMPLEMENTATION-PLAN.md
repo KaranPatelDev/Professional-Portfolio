@@ -90,7 +90,9 @@ All rich-text (`body_html`, `value_html`) is sanitized on save even though it's 
 
 **Images:** admin picks a file → uploaded client-side to Cloudinary (unsigned upload preset, free tier) → the returned `secure_url` is saved on the relevant record via the FastAPI CRUD endpoint. No separate media-library table — Cloudinary's own dashboard is the asset library.
 
-**Instant updates, no webhook needed:** because the admin UI lives inside the same Next.js app, each admin form submission is a Next.js Server Action that (1) calls the FastAPI CRUD endpoint, then (2) calls Next.js's own `revalidatePath()`/`revalidateTag()` in the same request. No cross-service webhook or shared secret — the page the visitor sees updates immediately after save.
+**Instant updates, no webhook needed (as built):** every public page fetches from the FastAPI API with `cache: "no-store"` — pages are server-rendered on each request rather than cached at all. At a portfolio's traffic volume this is simpler than wiring `revalidatePath()`/Server Actions and gives the same result: an admin save is visible on the very next page load, with zero extra plumbing.
+
+**Cross-origin session cookie:** since the admin panel (Next.js, one domain) and the API (FastAPI, a different domain) are separate deployments, the session cookie is issued with `SameSite=None; Secure` rather than the usual `Lax` — required for the browser to send it on cross-origin fetches. A consequence: Next.js Server Components/Proxy (middleware) running on the frontend's own domain can never see this cookie (cookies are domain-scoped), so admin auth is enforced by a client-side `AdminGuard` component (`components/admin/AdminGuard.tsx`) that calls `GET /api/admin/me` on mount and redirects to `/admin/login` on 401 — not by Next.js middleware/proxy. All `/admin/*` pages are client components for this reason.
 
 ## Build order (maps to Section 35 roadmap, backend pulled forward)
 
@@ -107,9 +109,21 @@ All rich-text (`body_html`, `value_html`) is sanitized on save even though it's 
 
 Command palette, About page, and everything else in Section 36's "Later" bucket (Engineering Lab, System Design, Build Log, AI assistant) stay deferred — the admin dashboard item in that list is now superseded and pulled into the MVP per this plan.
 
+## Status (as of this build session)
+
+Steps 1–8 are built and smoke-tested against the real Neon/Cloudinary/Gmail credentials:
+- Backend: all tables live on Neon, full CRUD + admin auth + contact form (SMTP) + Cloudinary uploads, verified via curl (login/logout/401 cases, CORS, cookie flags).
+- Seed script (`backend/scripts/seed.py`) populates real confirmed content: D&D Purchase case study, Magenta Connects experience, homepage copy blocks, services — safe to re-run.
+- Frontend: `npm run build` passes clean; homepage, experience, projects index + `[slug]` case study, work-with-me, contact, resume all render against live data end-to-end (verified via `curl` against the dev server).
+- Admin panel: login, dashboard, and full CRUD screens for projects/experience/testimonials/services/site content/availability/resume/contact-requests, with TipTap rich-text editing and Cloudinary image upload.
+
+**Not yet done:** step 9 (polish pass — Lighthouse, full accessibility/responsive pass) and step 10 (deployment + domain hookup), since deployment requires the user's own Vercel/Railway/Render account login. See `README.md` for the deployment steps once those accounts are connected.
+
+**Not verified:** the admin login flow through an actual browser (cross-origin cookie behavior was verified via `curl` with `Origin` headers + checking `Set-Cookie`/CORS response headers, but not a real browser session). Worth a manual click-through once running locally.
+
 ## Verification
 
-- `npm run build` (frontend) and `uvicorn` smoke test (backend) after scaffold.
-- Manual click-through of every nav link and CTA before calling MVP done.
-- Lighthouse run on homepage + one case study page before launch.
-- Contact form tested end-to-end (submission → DB row → email notification).
+- `npm run build` (frontend) and `uvicorn` smoke test (backend) — done.
+- Manual click-through of every nav link and CTA — still pending (recommend before calling MVP fully done).
+- Lighthouse run on homepage + one case study page — pending, part of the polish-pass step.
+- Contact form tested end-to-end (submission → DB row → email notification) — done. A real submission was posted, saved to Postgres, the Gmail SMTP notification sent with no errors logged, then the test row was deleted from `contact_requests`.

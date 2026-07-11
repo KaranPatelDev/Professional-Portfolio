@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #0a0b0d;
+  --color-surface: #131417;
+  --color-surface-elevated: #1b1d21;
+  --color-border: #2a2d33;
+  --color-accent: #3b82f6;
+  --color-accent-live: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-text-primary: #e6e7ea;
+  --color-text-secondary: #8a8d96;
+  --color-text-mono: #9ca8ff;
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-elevated: var(--color-surface-elevated);
+  --color-border: var(--color-border);
+  --color-accent: var(--color-accent);
+  --color-accent-live: var(--color-accent-live);
+  --color-warning: var(--color-warning);
+  --color-error: var(--color-error);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-mono: var(--color-text-mono);
+
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+
+  --radius-card: 8px;
+  --radius-button: 4px;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.prose-content h1,
+.prose-content h2,
+.prose-content h3,
+.prose-content h4 {
+  font-family: var(--font-heading);
+  color: var(--color-text-primary);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose-content p {
+  margin-bottom: 1em;
+  line-height: 1.7;
+  color: var(--color-text-primary);
+}
+
+.prose-content ul,
+.prose-content ol {
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+
+.prose-content li {
+  margin-bottom: 0.4em;
+}
+
+.prose-content a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.prose-content img {
+  border-radius: var(--radius-card);
+  margin: 1em 0;
+}
+
+.prose-content blockquote {
+  border-left: 2px solid var(--color-border);
+  padding-left: 1em;
+  color: var(--color-text-secondary);
+}
+
+.prose-content code {
+  font-family: var(--font-mono);
+  background: var(--color-surface);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
