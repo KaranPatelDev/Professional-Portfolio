@@ -1,5 +1,6 @@
 import { getExperience } from "@/lib/api";
 import { Card, RichText } from "@/components/ui";
+import Reveal from "@/components/Reveal";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,10 +13,13 @@ export default async function ExperiencePage() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="font-heading text-3xl mb-8">Experience</h1>
+      <Reveal>
+        <h1 className="font-heading text-3xl mb-8">Experience</h1>
+      </Reveal>
       <div className="space-y-6">
-        {experience.map((entry) => (
-          <Card key={entry.id}>
+        {experience.map((entry, i) => (
+          <Reveal key={entry.id} delay={i * 0.05}>
+          <Card>
             <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
               <h2 className="font-heading text-xl">
                 {entry.role} &mdash; {entry.company}
@@ -45,6 +49,7 @@ export default async function ExperiencePage() {
             )}
             {entry.body_html && <RichText html={entry.body_html} />}
           </Card>
+          </Reveal>
         ))}
         {experience.length === 0 && <p className="text-text-secondary">No experience entries yet.</p>}
       </div>

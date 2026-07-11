@@ -5,6 +5,8 @@ import Link from "next/link";
 import { getProjects } from "@/lib/api";
 import type { Project } from "@/lib/types";
 import { Card, Tag } from "@/components/ui";
+import { BentoGrid, BentoCell } from "@/components/BentoGrid";
+import Reveal from "@/components/Reveal";
 
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -21,26 +23,26 @@ export default function AdminProjectsPage() {
           + New project
         </Link>
       </div>
-      <div className="space-y-3">
-        {projects.map((p) => (
-          <Link key={p.id} href={`/admin/projects/${p.id}`}>
-            <Card>
-              <div className="flex items-center justify-between">
-                <div>
+      <BentoGrid>
+        {projects.map((p, i) => (
+          <BentoCell span={p.featured ? "2x1" : "1x1"} key={p.id}>
+            <Reveal delay={i * 0.05} className="h-full">
+              <Link href={`/admin/projects/${p.id}`} className="block h-full">
+                <Card className="h-full">
                   <div className="flex items-center gap-2 mb-1">
                     <Tag>{p.tags}</Tag>
                     <Tag>{p.status}</Tag>
                     {p.featured && <Tag>featured</Tag>}
                   </div>
                   <p className="font-heading">{p.title}</p>
-                </div>
-                <span className="text-text-secondary text-sm">/{p.slug}</span>
-              </div>
-            </Card>
-          </Link>
+                  <span className="text-text-secondary text-sm">/{p.slug}</span>
+                </Card>
+              </Link>
+            </Reveal>
+          </BentoCell>
         ))}
-        {projects.length === 0 && <p className="text-text-secondary">No projects yet.</p>}
-      </div>
+      </BentoGrid>
+      {projects.length === 0 && <p className="text-text-secondary">No projects yet.</p>}
     </div>
   );
 }
