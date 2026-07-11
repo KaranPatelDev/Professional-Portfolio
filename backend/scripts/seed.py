@@ -20,13 +20,13 @@ SITE_CONTENT = [
     dict(
         key="hero_headline",
         label="Hero headline",
-        value_html="<p>I build backend systems that businesses actually run on.</p>",
+        value_html="<p>I build the systems your frontend gets the credit for.</p>",
         page="homepage",
     ),
     dict(
         key="hero_supporting",
         label="Hero supporting copy",
-        value_html="<p>Backend-focused full-stack engineer specializing in Python and FastAPI. Currently open to backend/full-stack roles and select freelance projects.</p>",
+        value_html="<p>Backend engineer specializing in Python and FastAPI &mdash; production APIs, real clients, zero fluff. Open to full-time roles and select freelance work.</p>",
         page="homepage",
     ),
     dict(

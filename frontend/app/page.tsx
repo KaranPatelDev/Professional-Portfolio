@@ -5,7 +5,7 @@ import {
   getProjects,
   getServices,
 } from "@/lib/api";
-import { Card, GhostButton, PrimaryButton, RichText, StatChip, StatusDot, Tag } from "@/components/ui";
+import { Card, PrimaryButton, RichText, StatChip, StatusDot, Tag } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
@@ -73,7 +73,6 @@ export default async function Home() {
             </div>
             <div className="flex flex-wrap gap-3 mt-8">
               <PrimaryButton href="/resume">View Resume</PrimaryButton>
-              <GhostButton href="/projects/dnd-purchase">See D&amp;D Purchase &rarr;</GhostButton>
             </div>
           </Reveal>
           <Reveal delay={0.15} className="relative z-10">
