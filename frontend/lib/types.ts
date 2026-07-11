@@ -17,6 +17,7 @@ export type Project = {
   body_html: string | null;
   metrics: Record<string, string | number>;
   freelance_status: "shipped" | "in_progress" | "potential_customer" | null;
+  hidden: boolean;
   created_at: string;
   updated_at: string;
 };
@@ -96,6 +97,24 @@ export type GitCommit = {
   author: string;
   date: string;
   url: string;
+};
+
+export type Whoami = {
+  name: string;
+  role: string | null;
+  company: string | null;
+  availability_status: string;
+  core_stack: string[];
+  tenure: string | null;
+  project_count: number;
+  client_project_count: number;
+  live_project_count: number;
+};
+
+export type BackendStatus = {
+  status: string;
+  started_at: string;
+  uptime_seconds: number;
 };
 
 export type ContactRequest = {

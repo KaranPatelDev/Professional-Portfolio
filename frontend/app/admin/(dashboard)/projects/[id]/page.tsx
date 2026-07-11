@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getProjects } from "@/lib/api";
+import { adminListAllProjects } from "@/lib/api";
 import type { Project } from "@/lib/types";
 import ProjectForm from "../ProjectForm";
 
@@ -12,7 +12,7 @@ export default function EditProjectPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getProjects()
+    adminListAllProjects()
       .then((all) => setProject(all.find((p) => p.id === Number(params.id)) ?? null))
       .finally(() => setLoading(false));
   }, [params.id]);

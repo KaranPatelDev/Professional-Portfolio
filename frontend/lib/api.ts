@@ -1,5 +1,6 @@
 import type {
   Availability,
+  BackendStatus,
   BuildLogPost,
   ContactRequest,
   Experience,
@@ -10,6 +11,7 @@ import type {
   Service,
   SiteContent,
   Testimonial,
+  Whoami,
 } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8123";
@@ -48,6 +50,8 @@ export const getResume = () => apiFetch<Resume>("/api/resume");
 export const getBuildLogPosts = () => apiFetch<BuildLogPost[]>("/api/build-log");
 export const getBuildLogPost = (slug: string) => apiFetch<BuildLogPost>(`/api/build-log/${slug}`);
 export const getBuildLogCommits = (slug: string) => apiFetch<GitCommit[]>(`/api/build-log/${slug}/commits`);
+export const getWhoami = () => apiFetch<Whoami>("/api/whoami");
+export const getBackendStatus = () => apiFetch<BackendStatus>("/api/status");
 
 // ---- Public writes ----
 export const submitContact = (body: {
@@ -71,6 +75,7 @@ export const adminLogout = () => apiFetch<{ ok: true }>("/api/admin/logout", { m
 export const adminMe = () => apiFetch<{ ok: true }>("/api/admin/me");
 
 export const adminListAllServices = () => apiFetch<Service[]>("/api/services/all");
+export const adminListAllProjects = () => apiFetch<Project[]>("/api/projects/all");
 export const adminListAllTestimonials = () => apiFetch<Testimonial[]>("/api/testimonials/all");
 export const adminListContactRequests = () => apiFetch<ContactRequest[]>("/api/admin/contact-requests");
 export const adminListAllBuildLogPosts = () => apiFetch<BuildLogPost[]>("/api/build-log/all");

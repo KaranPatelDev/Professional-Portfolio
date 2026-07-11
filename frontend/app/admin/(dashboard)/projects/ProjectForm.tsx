@@ -27,6 +27,7 @@ const EMPTY: FormState = {
   body_html: "",
   metrics: {},
   freelance_status: null,
+  hidden: false,
 };
 
 export default function ProjectForm({ project }: { project?: Project }) {
@@ -166,6 +167,12 @@ export default function ProjectForm({ project }: { project?: Project }) {
           />
         </Field>
       </div>
+
+      <Toggle
+        checked={form.hidden}
+        onChange={(v) => set("hidden", v)}
+        label="Hidden (excluded from public listing/sitemap — reachable only by direct link, e.g. as an easter-egg unlock)"
+      />
 
       <Field label="Case study body">
         <RichTextEditor value={form.body_html ?? ""} onChange={(html) => set("body_html", html)} />

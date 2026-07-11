@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getProjects } from "@/lib/api";
+import { adminListAllProjects } from "@/lib/api";
 import type { Project } from "@/lib/types";
 import { Card, Tag } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
@@ -24,7 +24,7 @@ export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
-    getProjects().then(setProjects).catch(() => setProjects([]));
+    adminListAllProjects().then(setProjects).catch(() => setProjects([]));
   }, []);
 
   return (
@@ -45,6 +45,7 @@ export default function AdminProjectsPage() {
                     <Tag>{p.category}</Tag>
                     <Tag>{p.status}</Tag>
                     {p.featured && <Tag>featured</Tag>}
+                    {p.hidden && <Tag>hidden</Tag>}
                     {p.freelance_status && (
                       <span
                         className={`font-mono text-xs uppercase tracking-wide bg-surface-elevated border rounded px-2 py-0.5 ${FREELANCE_STATUS_CLASS[p.freelance_status]}`}

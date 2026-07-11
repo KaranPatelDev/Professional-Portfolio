@@ -18,7 +18,9 @@ from app.routers import (
     projects,
     resume,
     services,
+    status,
     testimonials,
+    whoami,
 )
 
 app = FastAPI(title="Karan Patel Portfolio API")
@@ -57,3 +59,5 @@ app.include_router(resume.router)
 app.include_router(contact.router)
 app.include_router(media.router)
 app.include_router(build_log.router)
+app.include_router(whoami.router)
+app.include_router(status.router)

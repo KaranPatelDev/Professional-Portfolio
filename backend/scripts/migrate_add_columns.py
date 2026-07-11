@@ -15,6 +15,7 @@ from app.database import engine
 STATEMENTS = [
     "ALTER TABLE projects ADD COLUMN IF NOT EXISTS freelance_status VARCHAR(50)",
     "ALTER TABLE build_log_posts ADD COLUMN IF NOT EXISTS github_repo VARCHAR(255)",
+    "ALTER TABLE projects ADD COLUMN IF NOT EXISTS hidden BOOLEAN DEFAULT false",
 ]
 
 with engine.begin() as conn:

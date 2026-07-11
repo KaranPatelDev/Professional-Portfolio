@@ -21,6 +21,7 @@ class ProjectBase(BaseModel):
     body_html: str | None = None
     metrics: dict = {}
     freelance_status: str | None = None  # shipped | in_progress | potential_customer
+    hidden: bool = False
 
 
 class ProjectCreate(ProjectBase):
@@ -166,3 +167,21 @@ class ContactOut(BaseModel):
 class LoginRequest(BaseModel):
     username: str
     password: str
+
+
+class WhoamiOut(BaseModel):
+    name: str
+    role: str | None
+    company: str | None
+    availability_status: str
+    core_stack: list[str]
+    tenure: str | None
+    project_count: int
+    client_project_count: int
+    live_project_count: int
+
+
+class StatusOut(BaseModel):
+    status: str
+    started_at: datetime
+    uptime_seconds: int

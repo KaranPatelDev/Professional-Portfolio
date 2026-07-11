@@ -9,6 +9,8 @@ import { Card, PrimaryButton, RichText, StatChip, StatusDot, Tag } from "@/compo
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
+import StatusWidget from "@/components/StatusWidget";
+import ApiPlayground from "@/components/ApiPlayground";
 import { stripHtml } from "@/lib/text";
 import Link from "next/link";
 
@@ -119,6 +121,11 @@ export default async function Home() {
               </Reveal>
             )}
           </BentoCell>
+          <BentoCell span="1x1">
+            <Reveal delay={0.18} className="h-full">
+              <StatusWidget />
+            </Reveal>
+          </BentoCell>
 
           {featuredProject && (
             <BentoCell span="2x2">
@@ -193,6 +200,15 @@ export default async function Home() {
             </BentoCell>
           )}
         </BentoGrid>
+        </div>
+      </section>
+
+      {/* Full-width API playground — deserves its own space, not crammed into the bento grid */}
+      <section className="w-full py-10 border-t border-border">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <Reveal>
+            <ApiPlayground />
+          </Reveal>
         </div>
       </section>
     </div>

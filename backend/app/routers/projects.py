@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Project
+from app.rate_limit import limiter
 from app.schemas import ProjectCreate, ProjectOut
 from app.security import require_admin, sanitize_html
 
@@ -11,7 +12,15 @@ router = APIRouter(prefix="/api/projects", tags=["projects"])
 
 
 @router.get("", response_model=list[ProjectOut])
-def list_projects(db: Session = Depends(get_db)):
+@limiter.limit("30/minute")
+def list_projects(request: Request, db: Session = Depends(get_db)):
+    return db.scalars(
+        select(Project).where(Project.hidden.is_(False)).order_by(Project.display_order, Project.id)
+    ).all()
+
+
+@router.get("/all", response_model=list[ProjectOut], dependencies=[Depends(require_admin)])
+def list_all_projects(db: Session = Depends(get_db)):
     return db.scalars(select(Project).order_by(Project.display_order, Project.id)).all()
 
 

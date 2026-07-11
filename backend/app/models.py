@@ -29,6 +29,9 @@ class Project(Base):
     metrics: Mapped[dict] = mapped_column(JSONB, default=dict)
     # Admin-only freelance pipeline stage — never shown on public pages.
     freelance_status: Mapped[str | None] = mapped_column(String(50), nullable=True)  # shipped | in_progress | potential_customer
+    # Excluded from the public list/sitemap but still fetchable by exact slug —
+    # the whole mechanic behind the terminal's easter-egg "unlock".
+    hidden: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
