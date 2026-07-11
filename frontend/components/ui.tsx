@@ -116,7 +116,7 @@ export function StatChip({ label, value }: { label: string; value: string }) {
   return (
     <div
       ref={ref}
-      className="bg-surface border border-border rounded-[var(--radius-card)] px-5 py-4 text-center transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20"
+      className="h-full min-h-[104px] flex flex-col items-center justify-center bg-surface border border-border rounded-[var(--radius-card)] px-5 py-4 text-center transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20"
     >
       <div className="font-heading text-3xl font-semibold text-accent tabular-nums">{numericMatch ? display : value}</div>
       <div className="text-xs text-text-secondary mt-1">{label}</div>

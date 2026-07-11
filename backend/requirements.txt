@@ -11,3 +11,4 @@ nh3
 slowapi
 python-dotenv
 cloudinary
+httpx

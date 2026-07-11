@@ -8,6 +8,18 @@ import { Card, Tag } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
 
+const FREELANCE_STATUS_LABEL: Record<string, string> = {
+  shipped: "Shipped",
+  in_progress: "In progress",
+  potential_customer: "Potential customer",
+};
+
+const FREELANCE_STATUS_CLASS: Record<string, string> = {
+  shipped: "text-accent-live border-accent-live/40",
+  in_progress: "text-accent border-accent/40",
+  potential_customer: "text-warning border-warning/40",
+};
+
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
 
@@ -29,10 +41,17 @@ export default function AdminProjectsPage() {
             <Reveal delay={i * 0.05} className="h-full">
               <Link href={`/admin/projects/${p.id}`} className="block h-full">
                 <Card className="h-full">
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <Tag>{p.category}</Tag>
                     <Tag>{p.status}</Tag>
                     {p.featured && <Tag>featured</Tag>}
+                    {p.freelance_status && (
+                      <span
+                        className={`font-mono text-xs uppercase tracking-wide bg-surface-elevated border rounded px-2 py-0.5 ${FREELANCE_STATUS_CLASS[p.freelance_status]}`}
+                      >
+                        {FREELANCE_STATUS_LABEL[p.freelance_status]}
+                      </span>
+                    )}
                   </div>
                   <p className="font-heading">{p.title}</p>
                   <span className="text-text-secondary text-sm">/{p.slug}</span>

@@ -11,6 +11,12 @@ cloudinary.config(
 )
 
 
-def upload_file(file_bytes: bytes, folder: str, resource_type: str = "auto") -> str:
-    result = cloudinary.uploader.upload(file_bytes, folder=folder, resource_type=resource_type)
+def upload_file(file_bytes: bytes, folder: str, resource_type: str = "auto", format: str | None = None) -> str:
+    kwargs = {"folder": folder, "resource_type": resource_type}
+    if format:
+        # Explicit format so Cloudinary tracks the correct file extension —
+        # otherwise "raw" uploads get an extension-less public_id and the
+        # downloaded file loses its .pdf association.
+        kwargs["format"] = format
+    result = cloudinary.uploader.upload(file_bytes, **kwargs)
     return result["secure_url"]

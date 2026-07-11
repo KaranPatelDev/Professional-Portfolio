@@ -3,8 +3,10 @@ import type {
   BuildLogPost,
   ContactRequest,
   Experience,
+  GitCommit,
   Project,
   Resume,
+  ResumeDownloadEvent,
   Service,
   SiteContent,
   Testimonial,
@@ -45,6 +47,7 @@ export const getAvailability = () => apiFetch<Availability>("/api/availability")
 export const getResume = () => apiFetch<Resume>("/api/resume");
 export const getBuildLogPosts = () => apiFetch<BuildLogPost[]>("/api/build-log");
 export const getBuildLogPost = (slug: string) => apiFetch<BuildLogPost>(`/api/build-log/${slug}`);
+export const getBuildLogCommits = (slug: string) => apiFetch<GitCommit[]>(`/api/build-log/${slug}/commits`);
 
 // ---- Public writes ----
 export const submitContact = (body: {
@@ -56,7 +59,8 @@ export const submitContact = (body: {
   website?: string;
 }) => apiFetch<ContactRequest>("/api/contact", { method: "POST", body: JSON.stringify(body) });
 
-export const trackResumeDownload = () => apiFetch<Resume>("/api/resume/track", { method: "POST" });
+export const trackResumeDownload = (referrer?: string) =>
+  apiFetch<Resume>("/api/resume/track", { method: "POST", body: JSON.stringify({ referrer: referrer ?? null }) });
 
 // ---- Admin ----
 export const adminLogin = (username: string, password: string) =>
@@ -70,6 +74,7 @@ export const adminListAllServices = () => apiFetch<Service[]>("/api/services/all
 export const adminListAllTestimonials = () => apiFetch<Testimonial[]>("/api/testimonials/all");
 export const adminListContactRequests = () => apiFetch<ContactRequest[]>("/api/admin/contact-requests");
 export const adminListAllBuildLogPosts = () => apiFetch<BuildLogPost[]>("/api/build-log/all");
+export const adminListResumeDownloads = () => apiFetch<ResumeDownloadEvent[]>("/api/resume/downloads");
 
 export function adminSave<T>(path: string, method: "POST" | "PUT", body: unknown): Promise<T> {
   return apiFetch<T>(path, { method, body: JSON.stringify(body) });

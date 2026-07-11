@@ -1,7 +1,8 @@
-import { getBuildLogPost } from "@/lib/api";
+import { getBuildLogCommits, getBuildLogPost } from "@/lib/api";
 import { RichText } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import ScrollProgress from "@/components/ScrollProgress";
+import CommitTimeline from "@/components/CommitTimeline";
 import { estimateReadingTime } from "@/lib/readingTime";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -27,6 +28,8 @@ export default async function BuildLogPostPage({ params }: Props) {
     notFound();
   }
 
+  const commits = post.github_repo ? await getBuildLogCommits(slug).catch(() => []) : [];
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16">
       <ScrollProgress />
@@ -41,6 +44,11 @@ export default async function BuildLogPostPage({ params }: Props) {
       <Reveal delay={0.05}>
         <RichText html={post.body_html} />
       </Reveal>
+      {post.github_repo && commits.length > 0 && (
+        <Reveal delay={0.1}>
+          <CommitTimeline commits={commits} repo={post.github_repo} />
+        </Reveal>
+      )}
     </div>
   );
 }

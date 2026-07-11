@@ -11,7 +11,7 @@ type FormState = Omit<BuildLogPost, "id" | "published_at">;
 
 export default function BuildLogForm({ post, onSaved }: { post?: BuildLogPost; onSaved: () => void }) {
   const [form, setForm] = useState<FormState>(
-    post ?? { slug: "", title: "", summary: "", body_html: "", published: true }
+    post ?? { slug: "", title: "", summary: "", body_html: "", published: true, github_repo: null }
   );
   const [pending, setPending] = useState(false);
 
@@ -50,6 +50,13 @@ export default function BuildLogForm({ post, onSaved }: { post?: BuildLogPost; o
         </div>
         <Field label="Summary (one line, shown on the index)">
           <Textarea value={form.summary ?? ""} onChange={(e) => set("summary", e.target.value)} rows={2} />
+        </Field>
+        <Field label="GitHub repo (owner/repo) — shows a live commit timeline on the post, optional">
+          <Input
+            value={form.github_repo ?? ""}
+            onChange={(e) => set("github_repo", e.target.value || null)}
+            placeholder="e.g. KaranPatelDev/portfolio"
+          />
         </Field>
         <Field label="Post body">
           <RichTextEditor value={form.body_html} onChange={(html) => set("body_html", html)} />

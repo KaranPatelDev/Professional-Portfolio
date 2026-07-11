@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, Search, X } from "lucide-react";
+import { Download, Menu, Search, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import { getResume } from "@/lib/api";
+import { triggerResumeDownload } from "./ResumeDownloadButton";
 
 const LINKS = [
   { href: "/experience", label: "Experience" },
@@ -26,6 +28,7 @@ export default function NavBar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [resumeUrl, setResumeUrl] = useState<string | null>(null);
 
   useEffect(() => {
     function onScroll() {
@@ -39,6 +42,12 @@ export default function NavBar() {
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    getResume()
+      .then((r) => setResumeUrl(r.file_url))
+      .catch(() => {});
+  }, []);
 
   function openPalette() {
     document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
@@ -80,6 +89,16 @@ export default function NavBar() {
           <button onClick={openPalette} className="sm:hidden p-2 text-text-secondary" aria-label="Open search">
             <Search size={18} />
           </button>
+          {resumeUrl && (
+            <button
+              onClick={() => triggerResumeDownload(resumeUrl)}
+              aria-label="Download resume (PDF)"
+              title="Download resume (PDF)"
+              className="p-2 text-text-secondary hover:text-accent transition-colors"
+            >
+              <Download size={18} />
+            </button>
+          )}
           <ThemeToggle />
           <button
             onClick={() => setMenuOpen((v) => !v)}

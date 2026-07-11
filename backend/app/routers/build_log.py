@@ -3,8 +3,9 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.github_client import fetch_commits
 from app.models import BuildLogPost
-from app.schemas import BuildLogPostBase, BuildLogPostOut
+from app.schemas import BuildLogPostBase, BuildLogPostOut, GitCommitOut
 from app.security import require_admin, sanitize_html
 
 router = APIRouter(prefix="/api/build-log", tags=["build-log"])
@@ -28,6 +29,16 @@ def get_post(slug: str, db: Session = Depends(get_db)):
     if not post:
         raise HTTPException(404, "Post not found")
     return post
+
+
+@router.get("/{slug}/commits", response_model=list[GitCommitOut])
+def get_commits(slug: str, db: Session = Depends(get_db)):
+    post = db.scalar(select(BuildLogPost).where(BuildLogPost.slug == slug))
+    if not post:
+        raise HTTPException(404, "Post not found")
+    if not post.github_repo:
+        return []
+    return fetch_commits(post.github_repo)
 
 
 @router.post("", response_model=BuildLogPostOut, dependencies=[Depends(require_admin)])

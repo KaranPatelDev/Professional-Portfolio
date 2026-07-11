@@ -27,6 +27,8 @@ class Project(Base):
     display_order: Mapped[int] = mapped_column(Integer, default=0)
     body_html: Mapped[str | None] = mapped_column(Text, nullable=True)
     metrics: Mapped[dict] = mapped_column(JSONB, default=dict)
+    # Admin-only freelance pipeline stage — never shown on public pages.
+    freelance_status: Mapped[str | None] = mapped_column(String(50), nullable=True)  # shipped | in_progress | potential_customer
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
@@ -100,6 +102,15 @@ class Resume(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
 
+class ResumeDownloadEvent(Base):
+    __tablename__ = "resume_download_events"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    referrer: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    user_agent: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), index=True)
+
+
 class BuildLogPost(Base):
     __tablename__ = "build_log_posts"
 
@@ -110,6 +121,7 @@ class BuildLogPost(Base):
     body_html: Mapped[str] = mapped_column(Text, default="")
     published: Mapped[bool] = mapped_column(Boolean, default=True)
     published_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    github_repo: Mapped[str | None] = mapped_column(String(255), nullable=True)  # "owner/repo"
 
 
 class ContactRequest(Base):

@@ -16,6 +16,7 @@ export type Project = {
   display_order: number;
   body_html: string | null;
   metrics: Record<string, string | number>;
+  freelance_status: "shipped" | "in_progress" | "potential_customer" | null;
   created_at: string;
   updated_at: string;
 };
@@ -71,6 +72,13 @@ export type Resume = {
   updated_at: string;
 };
 
+export type ResumeDownloadEvent = {
+  id: number;
+  referrer: string | null;
+  user_agent: string | null;
+  created_at: string;
+};
+
 export type BuildLogPost = {
   id: number;
   slug: string;
@@ -79,6 +87,15 @@ export type BuildLogPost = {
   body_html: string;
   published: boolean;
   published_at: string;
+  github_repo: string | null;
+};
+
+export type GitCommit = {
+  sha: string;
+  message: string;
+  author: string;
+  date: string;
+  url: string;
 };
 
 export type ContactRequest = {

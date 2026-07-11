@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import CommandPalette from "@/components/CommandPalette";
+import ResumeDownloadToast from "@/components/ResumeDownloadToast";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({

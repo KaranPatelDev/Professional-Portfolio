@@ -32,13 +32,13 @@ SITE_CONTENT = [
     dict(
         key="bio_short",
         label="Short bio (~40 words)",
-        value_html="<p>Karan Patel is a backend-focused full-stack engineer specializing in Python and FastAPI. He's built production APIs as a backend intern at Magenta Connects and delivered D&amp;D Purchase, a live B2B buyer-seller platform, as an independent freelance developer.</p>",
+        value_html="<p>Karan Patel is a backend-focused full-stack engineer specializing in Python and FastAPI. He builds production APIs as an AI + Backend Developer at BonsAI Agents and delivered D&amp;D Purchase, a live B2B buyer-seller platform, as an independent freelance developer.</p>",
         page="about",
     ),
     dict(
         key="bio_long",
         label="Long bio (~120 words, About page)",
-        value_html="<p>I'm a backend engineer who cares more about whether a system actually works in production than how it looks in a slide deck. As a Backend Developer Intern at Magenta Connects, I built and shipped 10+ FastAPI endpoints, cut average database response time by roughly 30% through indexing and query restructuring, and resolved 15+ production issues. Outside that, I've worked as a freelance full-stack developer &mdash; my strongest project, D&amp;D Purchase, is a live B2B platform with separate buyer and seller workflows that I took from requirements to deployment for a paying client. I also build applied-AI tools on the side (RAG pipelines, document processing, AI agents) because I like understanding how new tools actually get used, not just how they demo.</p>",
+        value_html="<p>I'm a backend engineer who cares more about whether a system actually works in production than how it looks in a slide deck. As an AI + Backend Developer at BonsAI Agents, I built and shipped 10+ FastAPI endpoints, cut average database response time by roughly 30% through indexing and query restructuring, and resolved 15+ production issues. Outside that, I've worked as a freelance full-stack developer &mdash; my strongest project, D&amp;D Purchase, is a live B2B platform with separate buyer and seller workflows that I took from requirements to deployment for a paying client. I also build applied-AI tools on the side (RAG pipelines, document processing, AI agents) because I like understanding how new tools actually get used, not just how they demo.</p>",
         page="about",
     ),
     dict(
@@ -47,16 +47,22 @@ SITE_CONTENT = [
         value_html="<p>I take a business problem &mdash; an internal tool, an MVP, a broken API &mdash; and own it end-to-end: requirements, architecture, build, deployment, and handover.</p>",
         page="work-with-me",
     ),
+    dict(
+        key="core_stack",
+        label="Core stack (homepage)",
+        value_html="<p>Python (Full-Stack), FastAPI, MySQL, PostgreSQL, MongoDB, Docker, Git, Postman</p>",
+        page="homepage",
+    ),
 ]
 
 EXPERIENCE = dict(
-    company="Magenta Connects Pvt. Ltd.",
-    role="Backend Developer Intern",
+    company="BonsAI Agents",
+    role="AI + Backend Developer",
     start_date="Dec 2025",
     end_date=None,
     summary="Built and maintained Python backend systems, shipping 10+ FastAPI endpoints with strict Pydantic schema validation. Improved average database response time by ~30% through indexing and query restructuring across MySQL and MongoDB. Resolved 15+ production issues and worked directly in Docker-based deployment environments.",
     metrics=["10+ endpoints shipped", "~30% DB response time improvement", "15+ production issues resolved"],
-    tools=["Python", "FastAPI", "Pydantic", "MySQL", "MongoDB", "Docker"],
+    tools=["Python", "FastAPI", "MySQL", "PostgreSQL", "MongoDB", "Docker", "Git", "Postman"],
     body_html=None,
     display_order=0,
 )

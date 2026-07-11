@@ -9,6 +9,7 @@ import { Card, GhostButton, PrimaryButton, RichText, StatChip, StatusDot, Tag } 
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
+import { stripHtml } from "@/lib/text";
 import Link from "next/link";
 
 function contentValue(blocks: { key: string; value_html: string }[], key: string, fallback: string) {
@@ -35,7 +36,13 @@ export default async function Home() {
   const featuredProject = sortedProjects.find((p) => p.featured) ?? sortedProjects[0];
   const otherProjects = sortedProjects.filter((p) => p.slug !== featuredProject?.slug).slice(0, 2);
   const latestExperience = experience[0];
-  const allStack = Array.from(new Set(projects.flatMap((p) => p.stack))).slice(0, 16);
+  // Core stack is an editable content block (admin > Site Content), not
+  // derived from project data — it's Karan's own skill set, independent of
+  // which client-project tech happens to be in the DB right now.
+  const coreStackRaw = content.find((b) => b.key === "core_stack")?.value_html;
+  const coreStack = coreStackRaw
+    ? stripHtml(coreStackRaw).split(",").map((s) => s.trim()).filter(Boolean)
+    : [];
 
   // Real, dynamic, non-jargon stats — counted from actual shipped projects
   // rather than technical metrics a non-technical visitor can't parse.
@@ -82,12 +89,12 @@ export default async function Home() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <BentoGrid>
           <BentoCell span="1x1">
-            <Reveal>
+            <Reveal className="h-full">
               <StatChip label={`Project${projectCount === 1 ? "" : "s"} shipped`} value={String(projectCount)} />
             </Reveal>
           </BentoCell>
           <BentoCell span="1x1">
-            <Reveal delay={0.05}>
+            <Reveal delay={0.05} className="h-full">
               <StatChip
                 label={`Client project${clientProjectCount === 1 ? "" : "s"} delivered`}
                 value={String(clientProjectCount)}
@@ -95,14 +102,14 @@ export default async function Home() {
             </Reveal>
           </BentoCell>
           <BentoCell span="1x1">
-            <Reveal delay={0.1}>
+            <Reveal delay={0.1} className="h-full">
               <StatChip label="Live in production" value={String(liveProjectCount)} />
             </Reveal>
           </BentoCell>
           <BentoCell span="1x1">
             {latestExperience && (
               <Reveal delay={0.15} className="h-full">
-                <Card className="h-full flex flex-col justify-center">
+                <Card className="h-full min-h-[104px] flex flex-col justify-center">
                   <p className="text-xs text-text-secondary uppercase font-mono mb-1">Currently</p>
                   <p className="font-heading text-sm leading-snug">
                     {latestExperience.role}
@@ -154,13 +161,13 @@ export default async function Home() {
             </BentoCell>
           ))}
 
-          {allStack.length > 0 && (
+          {coreStack.length > 0 && (
             <BentoCell span="2x1">
               <Reveal delay={0.2} className="h-full">
                 <Card className="h-full">
                   <p className="text-xs text-text-secondary uppercase font-mono mb-3">Core stack</p>
                   <div className="flex flex-wrap gap-2">
-                    {allStack.map((s) => (
+                    {coreStack.map((s) => (
                       <span key={s} className="font-mono text-xs text-text-mono bg-surface-elevated border border-border rounded px-2 py-1">
                         {s}
                       </span>

@@ -26,6 +26,7 @@ const EMPTY: FormState = {
   display_order: 0,
   body_html: "",
   metrics: {},
+  freelance_status: null,
 };
 
 export default function ProjectForm({ project }: { project?: Project }) {
@@ -109,6 +110,19 @@ export default function ProjectForm({ project }: { project?: Project }) {
           </select>
         </Field>
       </div>
+
+      <Field label="Freelance pipeline status (admin-only, never shown publicly)">
+        <select
+          value={form.freelance_status ?? ""}
+          onChange={(e) => set("freelance_status", (e.target.value || null) as FormState["freelance_status"])}
+          className="w-full bg-surface border border-border rounded-[var(--radius-button)] px-3 py-2"
+        >
+          <option value="">Not applicable</option>
+          <option value="potential_customer">Potential customer</option>
+          <option value="in_progress">In progress</option>
+          <option value="shipped">Done / shipped</option>
+        </select>
+      </Field>
 
       <Field label="Summary (one line)">
         <Textarea value={form.summary} onChange={(e) => set("summary", e.target.value)} rows={2} required />

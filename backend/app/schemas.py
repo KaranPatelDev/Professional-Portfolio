@@ -20,6 +20,7 @@ class ProjectBase(BaseModel):
     display_order: int = 0
     body_html: str | None = None
     metrics: dict = {}
+    freelance_status: str | None = None  # shipped | in_progress | potential_customer
 
 
 class ProjectCreate(ProjectBase):
@@ -95,12 +96,21 @@ class BuildLogPostBase(BaseModel):
     summary: str | None = None
     body_html: str = ""
     published: bool = True
+    github_repo: str | None = None
 
 
 class BuildLogPostOut(BuildLogPostBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
     published_at: datetime
+
+
+class GitCommitOut(BaseModel):
+    sha: str
+    message: str
+    author: str
+    date: datetime
+    url: str
 
 
 class AvailabilityOut(BaseModel):
@@ -118,6 +128,18 @@ class ResumeOut(BaseModel):
     file_url: str | None
     download_count: int
     updated_at: datetime
+
+
+class ResumeDownloadTrack(BaseModel):
+    referrer: str | None = None
+
+
+class ResumeDownloadEventOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    referrer: str | None
+    user_agent: str | None
+    created_at: datetime
 
 
 class ContactCreate(BaseModel):
