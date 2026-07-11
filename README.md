@@ -29,7 +29,12 @@ Visit `http://localhost:3000` for the site, `http://localhost:3000/admin/login` 
 ## Deployment
 
 - **Frontend → Vercel.** Import the repo, set root directory to `frontend`, add env var `NEXT_PUBLIC_API_URL` pointing at the deployed backend URL. Add `karanpateldev.indevs.in` as a custom domain in Vercel's project settings, then add the CNAME record it gives you wherever `indevs.in`'s DNS is managed.
-- **Backend → Railway or Render.** Import the repo, set root directory to `backend`, it will pick up `Procfile` and `requirements.txt` automatically. Set all the env vars from `.env` in the platform's dashboard (never commit `.env`). Update `CORS_ORIGINS` to include the production frontend domain (`https://karanpateldev.indevs.in`).
-- After both are live, update `NEXT_PUBLIC_API_URL` in Vercel to the backend's production URL and redeploy the frontend.
+- **Backend → Render.** New Web Service, connect the repo, set root directory to `backend`. Render doesn't auto-read the `Procfile`, so set these manually:
+  - Build command: `pip install -r requirements.txt`
+  - Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+  - Python version is pinned via `.python-version` (3.13), picked up automatically.
+  - Health check path: `/api/health`
+  Set all the env vars from `.env` in the dashboard (never commit `.env`). Update `CORS_ORIGINS` to include the production frontend domain (`https://karanpateldev.indevs.in`, plus the `*.vercel.app` preview URL if you want previews to hit the API too).
+- After both are live, update `NEXT_PUBLIC_API_URL` in Vercel to the backend's production `onrender.com` URL and redeploy the frontend.
 
 These steps require your own Vercel/Railway/Render account login, which I can't do on your behalf — the configs above are ready to go once you connect the repo.
