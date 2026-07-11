@@ -65,7 +65,7 @@ export default function ServiceForm({ entry, onSaved }: { entry?: Service; onSav
         <Field label="Proof">
           <Input value={form.proof ?? ""} onChange={(e) => set("proof", e.target.value)} />
         </Field>
-        <div className="grid grid-cols-2 gap-4 items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
           <Toggle checked={form.public} onChange={(v) => set("public", v)} label="Public (shown on site)" />
           <Field label="Display order">
             <Input type="number" value={form.display_order} onChange={(e) => set("display_order", Number(e.target.value))} />

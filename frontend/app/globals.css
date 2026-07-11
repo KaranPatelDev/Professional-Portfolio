@@ -66,6 +66,15 @@ body {
   mask-image: radial-gradient(ellipse 60% 60% at 50% 0%, black 40%, transparent 100%);
 }
 
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .glass-surface {
   background: color-mix(in srgb, var(--color-surface-elevated) 70%, transparent);
   backdrop-filter: blur(12px);
@@ -127,9 +136,10 @@ body {
   margin: 0 0 0.3em;
   font-family: var(--font-heading);
   font-weight: 600;
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
-  line-height: 1.08;
+  font-size: clamp(2rem, 4vw + 1rem, 3.5rem);
+  line-height: 1.1;
   letter-spacing: -0.02em;
+  text-wrap: balance;
   background: linear-gradient(135deg, var(--color-text-primary) 30%, var(--color-accent) 130%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -141,18 +151,21 @@ body {
   font-size: 1.125rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
+  text-wrap: pretty;
 }
 
-/* Ambient animated gradient blobs behind the hero */
+/* Ambient animated gradient blobs behind the hero.
+   inset: 0 (not negative) so the glow never needs clipping by an
+   overflow-hidden ancestor — a negative inset there previously got hard-cut
+   at the section boundary instead of fading, producing a visible rectangle. */
 .hero-glow {
   position: absolute;
-  inset: -20% -10%;
+  inset: 0;
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(480px circle at 15% 20%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 60%),
-    radial-gradient(420px circle at 85% 60%, color-mix(in srgb, var(--color-accent-live) 14%, transparent), transparent 60%);
-  filter: blur(40px);
+    radial-gradient(45% 55% at 20% 30%, color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 100%),
+    radial-gradient(40% 50% at 80% 70%, color-mix(in srgb, var(--color-accent-live) 12%, transparent), transparent 100%);
   animation: hero-glow-drift 14s ease-in-out infinite alternate;
 }
 

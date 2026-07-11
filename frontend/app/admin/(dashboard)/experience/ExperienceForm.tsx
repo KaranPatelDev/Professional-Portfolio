@@ -59,7 +59,7 @@ export default function ExperienceForm({
   return (
     <Card className="mb-4">
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Company">
             <Input value={form.company} onChange={(e) => set("company", e.target.value)} required />
           </Field>
@@ -67,7 +67,7 @@ export default function ExperienceForm({
             <Input value={form.role} onChange={(e) => set("role", e.target.value)} required />
           </Field>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Start date">
             <Input value={form.start_date} onChange={(e) => set("start_date", e.target.value)} required />
           </Field>

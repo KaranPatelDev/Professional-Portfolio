@@ -33,7 +33,7 @@ export default function ContentBlockForm({
   return (
     <Card className="mb-4">
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Key (identifies this block)">
             <Input value={block.key} disabled className="opacity-60" />
           </Field>

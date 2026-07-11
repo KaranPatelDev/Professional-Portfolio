@@ -20,31 +20,53 @@ export default function AdminNav() {
   const pathname = usePathname();
   const router = useRouter();
 
+  async function handleLogout() {
+    await adminLogout().catch(() => {});
+    router.push("/admin/login");
+  }
+
   return (
-    <aside className="w-56 shrink-0 border-r border-border min-h-screen py-8 px-4">
-      <p className="font-heading text-sm mb-6 text-text-secondary">Admin Panel</p>
-      <nav className="space-y-1">
-        {LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`block rounded px-3 py-2 text-sm ${
-              pathname === link.href ? "bg-surface-elevated text-accent" : "text-text-secondary hover:text-text-primary"
-            }`}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
-      <button
-        onClick={async () => {
-          await adminLogout().catch(() => {});
-          router.push("/admin/login");
-        }}
-        className="mt-8 text-sm text-text-secondary hover:text-error"
-      >
-        Log out
-      </button>
-    </aside>
+    <>
+      {/* Desktop sidebar */}
+      <aside className="hidden md:block w-56 shrink-0 border-r border-border min-h-screen py-8 px-4">
+        <p className="font-heading text-sm mb-6 text-text-secondary">Admin Panel</p>
+        <nav className="space-y-1">
+          {LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`block rounded px-3 py-2 text-sm ${
+                pathname === link.href ? "bg-surface-elevated text-accent" : "text-text-secondary hover:text-text-primary"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <button onClick={handleLogout} className="mt-8 text-sm text-text-secondary hover:text-error">
+          Log out
+        </button>
+      </aside>
+
+      {/* Mobile horizontal nav */}
+      <div className="md:hidden border-b border-border sticky top-0 z-30 bg-bg">
+        <nav className="flex gap-1 overflow-x-auto px-3 py-2 no-scrollbar">
+          {LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`shrink-0 rounded px-3 py-1.5 text-sm whitespace-nowrap ${
+                pathname === link.href ? "bg-surface-elevated text-accent" : "text-text-secondary"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <button onClick={handleLogout} className="shrink-0 rounded px-3 py-1.5 text-sm text-text-secondary">
+            Log out
+          </button>
+        </nav>
+      </div>
+    </>
   );
 }

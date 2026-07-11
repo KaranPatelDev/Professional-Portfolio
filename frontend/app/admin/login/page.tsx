@@ -26,7 +26,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="max-w-sm mx-auto px-6 py-24">
+    <div className="max-w-sm mx-auto px-4 sm:px-6 py-24">
       <h1 className="font-heading text-2xl mb-6">Admin Login</h1>
       <form onSubmit={handleSubmit}>
         <Field label="Username">

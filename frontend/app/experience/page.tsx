@@ -12,7 +12,7 @@ export default async function ExperiencePage() {
   const experience = await getExperience().catch(() => []);
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-20">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20">
       <Reveal>
         <PageTitle>Experience</PageTitle>
       </Reveal>

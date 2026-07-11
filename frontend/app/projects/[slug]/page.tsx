@@ -30,7 +30,7 @@ export default async function ProjectPage({ params }: Props) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16">
       <Reveal>
         <div className="flex items-center gap-2 mb-4">
           <Tag>{project.tags.replace("_", " ")}</Tag>

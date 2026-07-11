@@ -17,7 +17,7 @@ export default async function WorkWithMePage() {
   const pitch = content.find((c) => c.key === "freelance_pitch")?.value_html;
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-20">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-20">
       <Reveal>
         <PageTitle>Work With Me</PageTitle>
         {pitch && (

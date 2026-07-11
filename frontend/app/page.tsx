@@ -37,9 +37,9 @@ export default async function Home() {
   const allStack = Array.from(new Set(projects.flatMap((p) => p.stack))).slice(0, 16);
 
   return (
-    <div className="max-w-5xl mx-auto px-6">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6">
       {/* Hero */}
-      <section className="relative py-24 md:py-32 grid gap-8 md:grid-cols-2 items-center overflow-hidden">
+      <section className="relative py-16 sm:py-24 xl:py-32 grid gap-8 xl:grid-cols-[1.3fr_1fr] items-center overflow-hidden">
         <div className="hero-glow" />
         <div className="absolute inset-x-0 top-0 h-full bg-dot-grid pointer-events-none" />
         <Reveal className="relative z-10">

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="max-w-lg mx-auto px-6 py-20">
+    <div className="max-w-lg mx-auto px-4 sm:px-6 py-20">
       <Reveal>
         <PageTitle>Contact</PageTitle>
         <ContactForm />

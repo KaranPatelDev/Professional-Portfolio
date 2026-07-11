@@ -73,7 +73,7 @@ export default function ProjectForm({ project }: { project?: Project }) {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl">
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Slug (URL, unique)">
           <Input value={form.slug} onChange={(e) => set("slug", e.target.value)} required />
         </Field>
@@ -82,7 +82,7 @@ export default function ProjectForm({ project }: { project?: Project }) {
         </Field>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Field label="Category">
           <Input value={form.category} onChange={(e) => set("category", e.target.value)} />
         </Field>
@@ -125,7 +125,7 @@ export default function ProjectForm({ project }: { project?: Project }) {
         />
       </Field>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Live URL">
           <Input value={form.live_url ?? ""} onChange={(e) => set("live_url", e.target.value)} />
         </Field>
@@ -142,7 +142,7 @@ export default function ProjectForm({ project }: { project?: Project }) {
         )}
       </Field>
 
-      <div className="grid grid-cols-2 gap-4 items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
         <Toggle checked={form.featured} onChange={(v) => set("featured", v)} label="Featured (larger card, first position)" />
         <Field label="Display order (lower = first)">
           <Input
