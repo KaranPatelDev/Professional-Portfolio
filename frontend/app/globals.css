@@ -84,22 +84,90 @@ body {
   border-radius: inherit;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 200ms ease;
+  transition: opacity 250ms ease;
   background: radial-gradient(
-    240px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
-    color-mix(in srgb, var(--color-accent) 15%, transparent),
+    380px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+    color-mix(in srgb, var(--color-accent) 28%, transparent),
     transparent 70%
   );
   z-index: 1;
 }
 
-.spotlight-card:hover::before {
+.spotlight-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 250ms ease;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 50%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 12%, transparent) inset;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before,
+.spotlight-card:hover::after {
   opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .spotlight-card::before {
     display: none;
+  }
+}
+
+/* Hero headline/supporting copy: force large display type regardless of the
+   CMS content's own <p>/<h1> tags, since the generic .prose-content style is
+   sized for body copy, not a hero statement. */
+
+.hero-headline p,
+.hero-headline h1,
+.hero-headline h2 {
+  margin: 0 0 0.3em;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--color-text-primary) 30%, var(--color-accent) 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-supporting p {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* Ambient animated gradient blobs behind the hero */
+.hero-glow {
+  position: absolute;
+  inset: -20% -10%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(480px circle at 15% 20%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 60%),
+    radial-gradient(420px circle at 85% 60%, color-mix(in srgb, var(--color-accent-live) 14%, transparent), transparent 60%);
+  filter: blur(40px);
+  animation: hero-glow-drift 14s ease-in-out infinite alternate;
+}
+
+@keyframes hero-glow-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(2%, -3%) scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-glow {
+    animation: none;
   }
 }
 

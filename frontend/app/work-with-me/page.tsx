@@ -1,5 +1,5 @@
 import { getContentBlocks, getServices } from "@/lib/api";
-import { Card, PrimaryButton, RichText } from "@/components/ui";
+import { Card, PageTitle, PrimaryButton, RichText } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
 import type { Metadata } from "next";
@@ -17,18 +17,18 @@ export default async function WorkWithMePage() {
   const pitch = content.find((c) => c.key === "freelance_pitch")?.value_html;
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16">
+    <div className="max-w-5xl mx-auto px-6 py-20">
       <Reveal>
-        <h1 className="font-heading text-3xl mb-4">Work With Me</h1>
+        <PageTitle>Work With Me</PageTitle>
         {pitch && (
-          <div className="text-text-secondary text-lg mb-10 max-w-3xl">
+          <div className="text-text-secondary text-lg mb-10 max-w-3xl -mt-6">
             <RichText html={pitch} />
           </div>
         )}
       </Reveal>
 
       <Reveal delay={0.05}>
-        <h2 className="font-heading text-xl mb-4">Services</h2>
+        <h2 className="font-heading text-2xl font-semibold mb-4">Services</h2>
       </Reveal>
       <BentoGrid className="mb-12">
         {services

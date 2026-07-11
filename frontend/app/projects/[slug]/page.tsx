@@ -36,8 +36,8 @@ export default async function ProjectPage({ params }: Props) {
           <Tag>{project.tags.replace("_", " ")}</Tag>
           <Tag>{project.status}</Tag>
         </div>
-        <h1 className="font-heading text-3xl mb-3">{project.title}</h1>
-        <p className="text-text-secondary text-lg mb-8">{project.summary}</p>
+        <h1 className="font-heading text-4xl md:text-5xl font-semibold tracking-tight mb-4">{project.title}</h1>
+        <p className="text-text-secondary text-lg mb-8 max-w-xl">{project.summary}</p>
       </Reveal>
 
       <Reveal delay={0.05}>

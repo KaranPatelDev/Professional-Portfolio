@@ -1,5 +1,5 @@
 import { getProjects } from "@/lib/api";
-import { Card, Tag } from "@/components/ui";
+import { Card, PageTitle, Tag } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
 import Link from "next/link";
@@ -14,9 +14,9 @@ export default async function ProjectsPage() {
   const projects = (await getProjects().catch(() => [])).sort((a, b) => a.display_order - b.display_order);
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16">
+    <div className="max-w-5xl mx-auto px-6 py-20">
       <Reveal>
-        <h1 className="font-heading text-3xl mb-8">Projects</h1>
+        <PageTitle subtitle="Client work, production systems, and applied-AI projects.">Projects</PageTitle>
       </Reveal>
       <BentoGrid>
         {projects.map((project, i) => (

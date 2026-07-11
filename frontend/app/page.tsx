@@ -39,26 +39,29 @@ export default async function Home() {
   return (
     <div className="max-w-5xl mx-auto px-6">
       {/* Hero */}
-      <section className="relative py-20 grid gap-8 md:grid-cols-2 items-center overflow-hidden">
+      <section className="relative py-24 md:py-32 grid gap-8 md:grid-cols-2 items-center overflow-hidden">
+        <div className="hero-glow" />
         <div className="absolute inset-x-0 top-0 h-full bg-dot-grid pointer-events-none" />
         <Reveal className="relative z-10">
           {availability && (
-            <div className="flex items-center gap-2 text-sm text-text-secondary mb-4">
+            <div className="inline-flex items-center gap-2 text-sm text-text-secondary mb-5 bg-surface/80 border border-border rounded-full px-3 py-1">
               <StatusDot live />
               <span>{availability.status_text}</span>
             </div>
           )}
-          <RichText html={heroHeadline} />
-          <div className="text-text-secondary mt-2">
+          <div className="hero-headline">
+            <RichText html={heroHeadline} />
+          </div>
+          <div className="hero-supporting mt-3 max-w-md">
             <RichText html={heroSupporting} />
           </div>
-          <div className="flex gap-3 mt-6">
+          <div className="flex flex-wrap gap-3 mt-8">
             <PrimaryButton href="/resume">View Resume</PrimaryButton>
             <GhostButton href="/projects/dnd-purchase">See D&amp;D Purchase &rarr;</GhostButton>
           </div>
         </Reveal>
-        <Reveal delay={0.1} className="relative z-10">
-          <Card>
+        <Reveal delay={0.15} className="relative z-10">
+          <Card featured>
             <p className="font-mono text-xs text-text-mono mb-2">request-flow.diagram</p>
             <pre className="font-mono text-xs text-text-secondary leading-relaxed overflow-x-auto">
 {`client ──▶ FastAPI ──▶ Postgres

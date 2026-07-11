@@ -1,5 +1,5 @@
 import { getExperience } from "@/lib/api";
-import { Card, RichText } from "@/components/ui";
+import { Card, PageTitle, RichText } from "@/components/ui";
 import Reveal from "@/components/Reveal";
 import type { Metadata } from "next";
 
@@ -12,9 +12,9 @@ export default async function ExperiencePage() {
   const experience = await getExperience().catch(() => []);
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
+    <div className="max-w-3xl mx-auto px-6 py-20">
       <Reveal>
-        <h1 className="font-heading text-3xl mb-8">Experience</h1>
+        <PageTitle>Experience</PageTitle>
       </Reveal>
       <div className="space-y-6">
         {experience.map((entry, i) => (

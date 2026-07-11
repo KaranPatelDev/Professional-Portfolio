@@ -28,8 +28,8 @@ export function Card({
       ref={ref}
       onMouseMove={handleMouseMove}
       className={`spotlight-card bg-surface border ${
-        featured ? "border-[1.5px] border-accent/40" : "border-border"
-      } rounded-[var(--radius-card)] p-6 transition-all duration-200 hover:border-accent hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 ${className}`}
+        featured ? "border-[1.5px] border-accent/50 shadow-lg shadow-accent/5" : "border-border"
+      } rounded-[var(--radius-card)] p-6 transition-all duration-300 ease-out hover:border-accent hover:-translate-y-1 hover:scale-[1.01] hover:shadow-xl hover:shadow-black/30 ${className}`}
     >
       <div className="relative z-[2]">{children}</div>
     </div>
@@ -48,9 +48,10 @@ export function PrimaryButton({ href, children }: { href: string; children: Reac
   return (
     <Link
       href={href}
-      className="inline-flex items-center rounded-[var(--radius-button)] bg-accent px-4 py-2 text-sm font-medium text-white transition-all hover:opacity-90 hover:shadow-[0_0_20px_-4px_var(--color-accent)]"
+      className="group relative inline-flex items-center gap-1.5 overflow-hidden rounded-full bg-gradient-to-r from-accent to-indigo-500 px-5 py-2.5 text-sm font-medium text-white shadow-md shadow-accent/20 transition-all duration-300 hover:scale-[1.04] hover:shadow-xl hover:shadow-accent/40 active:scale-[0.98]"
     >
-      {children}
+      <span className="absolute inset-0 -translate-x-full bg-white/20 transition-transform duration-500 group-hover:translate-x-full" />
+      <span className="relative">{children}</span>
     </Link>
   );
 }
@@ -59,7 +60,7 @@ export function GhostButton({ href, children }: { href: string; children: ReactN
   return (
     <Link
       href={href}
-      className="inline-flex items-center rounded-[var(--radius-button)] border border-border px-4 py-2 text-sm font-medium text-text-primary hover:border-accent transition-colors"
+      className="inline-flex items-center rounded-full border border-border px-5 py-2.5 text-sm font-medium text-text-primary transition-all duration-300 hover:border-accent hover:bg-surface-elevated hover:scale-[1.03] active:scale-[0.98]"
     >
       {children}
     </Link>
@@ -94,9 +95,9 @@ export function StatChip({ label, value }: { label: string; value: string }) {
   return (
     <div
       ref={ref}
-      className="bg-surface border border-border rounded-[var(--radius-card)] px-5 py-4 text-center transition-colors hover:border-accent"
+      className="bg-surface border border-border rounded-[var(--radius-card)] px-5 py-4 text-center transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20"
     >
-      <div className="font-heading text-2xl text-accent tabular-nums">{numericMatch ? display : value}</div>
+      <div className="font-heading text-3xl font-semibold text-accent tabular-nums">{numericMatch ? display : value}</div>
       <div className="text-xs text-text-secondary mt-1">{label}</div>
     </div>
   );
@@ -113,4 +114,13 @@ export function StatusDot({ live = true }: { live?: boolean }) {
 
 export function RichText({ html }: { html: string }) {
   return <div className="prose-content" dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
+export function PageTitle({ children, subtitle }: { children: ReactNode; subtitle?: string }) {
+  return (
+    <div className="mb-10">
+      <h1 className="font-heading text-4xl md:text-5xl font-semibold tracking-tight leading-tight mb-3">{children}</h1>
+      {subtitle && <p className="text-text-secondary text-lg max-w-xl">{subtitle}</p>}
+    </div>
+  );
 }
