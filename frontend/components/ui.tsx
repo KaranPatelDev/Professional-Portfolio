@@ -14,22 +14,43 @@ export function Card({
   featured?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    el.style.setProperty("--spotlight-x", `${e.clientX - rect.left}px`);
-    el.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    el.style.setProperty("--spotlight-x", `${x}px`);
+    el.style.setProperty("--spotlight-y", `${y}px`);
+
+    if (reduceMotion) return;
+    // Subtle 3D tilt toward the cursor, capped at ~6deg — not full spatial UI,
+    // just a tactile card-level micro-interaction. Inert on touch (no mousemove).
+    const px = (x / rect.width - 0.5) * 2; // -1..1
+    const py = (y / rect.height - 0.5) * 2;
+    const rotateY = px * 6;
+    const rotateX = -py * 6;
+    el.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px) scale(1.01)`;
+  }
+
+  function handleMouseLeave() {
+    const el = ref.current;
+    if (!el || reduceMotion) return;
+    el.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)";
   }
 
   return (
     <div
       ref={ref}
       onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       className={`spotlight-card bg-surface border ${
         featured ? "border-[1.5px] border-accent/50 shadow-lg shadow-accent/5" : "border-border"
-      } rounded-[var(--radius-card)] p-6 transition-all duration-300 ease-out hover:border-accent hover:-translate-y-1 hover:scale-[1.01] hover:shadow-xl hover:shadow-black/30 ${className}`}
+      } rounded-[var(--radius-card)] p-6 transition-all duration-300 ease-out will-change-transform hover:border-accent hover:shadow-xl hover:shadow-black/30 ${
+        reduceMotion ? "hover:-translate-y-1 hover:scale-[1.01]" : ""
+      } ${className}`}
     >
       <div className="relative z-[2]">{children}</div>
     </div>

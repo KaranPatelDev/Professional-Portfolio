@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
-:root {
+/* Dark is the default/fallback palette (matches the brand's primary intended
+   experience) applied before next-themes' data-theme attribute is set. */
+:root,
+:root[data-theme="dark"] {
   --color-bg: #0a0b0d;
   --color-surface: #131417;
   --color-surface-elevated: #1b1d21;
@@ -12,6 +15,24 @@
   --color-text-primary: #e6e7ea;
   --color-text-secondary: #8a8d96;
   --color-text-mono: #9ca8ff;
+  --glow-strength: 1;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --color-bg: #fafafa;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f1f2f4;
+  --color-border: #e2e4e8;
+  --color-accent: #2563eb;
+  --color-accent-live: #059669;
+  --color-warning: #b45309;
+  --color-error: #dc2626;
+  --color-text-primary: #14161a;
+  --color-text-secondary: #5b5e66;
+  --color-text-mono: #4338ca;
+  --glow-strength: 0.4;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -33,10 +54,6 @@
 
   --radius-card: 8px;
   --radius-button: 4px;
-}
-
-html {
-  color-scheme: dark;
 }
 
 body {
@@ -117,7 +134,7 @@ body {
 
 .spotlight-card:hover::before,
 .spotlight-card:hover::after {
-  opacity: 1;
+  opacity: var(--glow-strength, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -163,6 +180,7 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 0;
+  opacity: var(--glow-strength, 1);
   background:
     radial-gradient(45% 55% at 20% 30%, color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 100%),
     radial-gradient(40% 50% at 80% 70%, color-mix(in srgb, var(--color-accent-live) 12%, transparent), transparent 100%);
@@ -180,6 +198,28 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-glow {
+    animation: none;
+  }
+}
+
+/* Animated request-flow diagram connectors — a traveling dash pattern to
+   suggest data actually moving through the pipeline. */
+.flow-line {
+  fill: none;
+  stroke: var(--color-text-secondary);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+  animation: flow-dash 1.2s linear infinite;
+}
+
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-line {
     animation: none;
   }
 }

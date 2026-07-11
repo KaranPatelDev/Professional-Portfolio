@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const LINKS = [
   { href: "/experience", label: "Experience" },
@@ -11,6 +12,10 @@ const LINKS = [
   { href: "/work-with-me", label: "Work With Me" },
   { href: "/contact", label: "Contact" },
 ];
+
+function isMac() {
+  return typeof navigator !== "undefined" && /Mac/.test(navigator.platform);
+}
 
 export default function NavBar() {
   const pathname = usePathname();
@@ -29,6 +34,10 @@ export default function NavBar() {
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  function openPalette() {
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
+  }
 
   return (
     <header
@@ -55,14 +64,27 @@ export default function NavBar() {
           })}
         </ul>
 
-        <button
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          className="md:hidden p-2 -mr-2 text-text-primary"
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={openPalette}
+            className="hidden sm:flex items-center gap-2 text-xs text-text-secondary border border-border rounded-full px-3 py-1.5 hover:border-accent transition-colors"
+          >
+            <Search size={13} />
+            <span className="font-mono">{isMac() ? "⌘K" : "Ctrl K"}</span>
+          </button>
+          <button onClick={openPalette} className="sm:hidden p-2 text-text-secondary" aria-label="Open search">
+            <Search size={18} />
+          </button>
+          <ThemeToggle />
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            className="md:hidden p-2 -mr-2 text-text-primary"
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
 
       {menuOpen && (

@@ -8,6 +8,7 @@ import {
 import { Card, GhostButton, PrimaryButton, RichText, StatChip, StatusDot, Tag } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
+import RequestFlowDiagram from "@/components/RequestFlowDiagram";
 import Link from "next/link";
 
 function contentValue(blocks: { key: string; value_html: string }[], key: string, fallback: string) {
@@ -62,16 +63,7 @@ export default async function Home() {
         </Reveal>
         <Reveal delay={0.15} className="relative z-10">
           <Card featured>
-            <p className="font-mono text-xs text-text-mono mb-2">request-flow.diagram</p>
-            <pre className="font-mono text-xs text-text-secondary leading-relaxed overflow-x-auto">
-{`client ──▶ FastAPI ──▶ Postgres
-              │
-              ▼
-        validation (Pydantic)
-              │
-              ▼
-        response ──▶ client`}
-            </pre>
+            <RequestFlowDiagram />
           </Card>
         </Reveal>
       </section>
