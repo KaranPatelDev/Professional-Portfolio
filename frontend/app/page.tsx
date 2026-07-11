@@ -9,7 +9,7 @@ import { Card, PrimaryButton, RichText, StatChip, StatusDot, Tag } from "@/compo
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
-import OscilloscopeBackground from "@/components/OscilloscopeBackground";
+import CircuitTraceBackground from "@/components/CircuitTraceBackground";
 import { stripHtml } from "@/lib/text";
 import Link from "next/link";
 
@@ -57,7 +57,7 @@ export default async function Home() {
           width), content constrained to a readable column inside it. */}
       <section className="relative w-full overflow-hidden">
         <div className="hero-glow" />
-        <OscilloscopeBackground />
+        <CircuitTraceBackground />
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-24 xl:py-32 grid gap-8 xl:grid-cols-[1.3fr_1fr] items-center">
           <Reveal className="relative z-10">
             {availability && (
