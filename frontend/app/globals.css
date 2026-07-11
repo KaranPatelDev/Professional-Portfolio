@@ -83,6 +83,33 @@ body {
   mask-image: radial-gradient(ellipse 60% 60% at 50% 0%, black 40%, transparent 100%);
 }
 
+/* Hero background candidate #1: real GitHub contribution graph as ambient
+   texture, instead of decorative particles/gradient blobs. */
+.contribution-grid-mask {
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 100%);
+}
+
+.contribution-cell {
+  animation: contribution-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes contribution-pulse {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contribution-cell {
+    animation: none;
+  }
+}
+
 .no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;

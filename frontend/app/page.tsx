@@ -9,6 +9,8 @@ import { Card, PrimaryButton, RichText, StatChip, StatusDot, Tag } from "@/compo
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
+import ContributionGraphBackground from "@/components/ContributionGraphBackground";
+import { getContributions } from "@/lib/github";
 import { stripHtml } from "@/lib/text";
 import Link from "next/link";
 
@@ -17,12 +19,13 @@ function contentValue(blocks: { key: string; value_html: string }[], key: string
 }
 
 export default async function Home() {
-  const [availability, content, experience, projects, services] = await Promise.all([
+  const [availability, content, experience, projects, services, contributions] = await Promise.all([
     getAvailability().catch(() => null),
     getContentBlocks().catch(() => []),
     getExperience().catch(() => []),
     getProjects().catch(() => []),
     getServices().catch(() => []),
+    getContributions(),
   ]);
 
   const heroHeadline = contentValue(content, "hero_headline", "<p>I build backend systems that businesses actually run on.</p>");
@@ -56,7 +59,11 @@ export default async function Home() {
           width), content constrained to a readable column inside it. */}
       <section className="relative w-full overflow-hidden">
         <div className="hero-glow" />
-        <div className="absolute inset-0 bg-dot-grid pointer-events-none" />
+        {contributions ? (
+          <ContributionGraphBackground contributions={contributions} />
+        ) : (
+          <div className="absolute inset-0 bg-dot-grid pointer-events-none" />
+        )}
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-24 xl:py-32 grid gap-8 xl:grid-cols-[1.3fr_1fr] items-center">
           <Reveal className="relative z-10">
             {availability && (
