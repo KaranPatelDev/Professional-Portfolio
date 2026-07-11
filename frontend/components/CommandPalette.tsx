@@ -7,6 +7,7 @@ import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, C
 import { getBuildLogPosts, getExperience, getProjects, getServices } from "@/lib/api";
 import type { BuildLogPost, Experience, Project, Service } from "@/lib/types";
 import { SOCIAL_LINKS } from "@/lib/social";
+import { stripHtml } from "@/lib/text";
 import { ExternalLink, FileText, Home, Mail, Moon, Sun, Briefcase, User, Wrench, Newspaper } from "lucide-react";
 
 export default function CommandPalette() {
@@ -52,6 +53,14 @@ export default function CommandPalette() {
     setOpen(false);
   }
 
+  // Pull every searchable term straight from the project's own content —
+  // stack, category, role, summary, and the full case-study body — so
+  // typing "python", "freelance", "fullstack", "reactjs", etc. surfaces any
+  // project that actually mentions it, not just ones matching the title.
+  function projectKeywords(p: Project): string[] {
+    return [p.summary, p.role ?? "", p.category, p.tags.replace("_", " "), ...p.stack, stripHtml(p.body_html)];
+  }
+
   return (
     <CommandDialog
       open={open}
@@ -85,7 +94,7 @@ export default function CommandPalette() {
               <PaletteItem
                 key={p.slug}
                 icon={<Briefcase size={15} />}
-                keywords={[p.summary, ...p.stack, p.category]}
+                keywords={projectKeywords(p)}
                 onSelect={() => go(`/projects/${p.slug}`)}
               >
                 <div>
@@ -118,10 +127,13 @@ export default function CommandPalette() {
               <PaletteItem
                 key={s.id}
                 icon={<Wrench size={15} />}
-                keywords={[s.client_problem, s.deliverable, ...s.stack]}
+                keywords={[s.client_problem, s.deliverable, s.proof ?? "", ...s.stack]}
                 onSelect={() => go("/work-with-me")}
               >
-                {s.name}
+                <div>
+                  <div>{s.name}</div>
+                  <div className="text-xs text-text-secondary">{s.deliverable}</div>
+                </div>
               </PaletteItem>
             ))}
           </CommandGroup>

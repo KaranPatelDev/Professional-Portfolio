@@ -8,7 +8,7 @@ import {
 import { Card, GhostButton, PrimaryButton, RichText, StatChip, StatusDot, Tag } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
-import TerminalIntro from "@/components/TerminalIntro";
+import InteractiveTerminal from "@/components/InteractiveTerminal";
 import Link from "next/link";
 
 function contentValue(blocks: { key: string; value_html: string }[], key: string, fallback: string) {
@@ -36,6 +36,12 @@ export default async function Home() {
   const otherProjects = sortedProjects.filter((p) => p.slug !== featuredProject?.slug).slice(0, 2);
   const latestExperience = experience[0];
   const allStack = Array.from(new Set(projects.flatMap((p) => p.stack))).slice(0, 16);
+
+  // Real, dynamic, non-jargon stats — counted from actual shipped projects
+  // rather than technical metrics a non-technical visitor can't parse.
+  const projectCount = projects.length;
+  const clientProjectCount = projects.filter((p) => p.tags === "client_work").length;
+  const liveProjectCount = projects.filter((p) => p.status === "live").length;
 
   return (
     <div className="w-full">
@@ -65,7 +71,7 @@ export default async function Home() {
           </Reveal>
           <Reveal delay={0.15} className="relative z-10">
             <Card featured>
-              <TerminalIntro />
+              <InteractiveTerminal />
             </Card>
           </Reveal>
         </div>
@@ -77,17 +83,20 @@ export default async function Home() {
         <BentoGrid>
           <BentoCell span="1x1">
             <Reveal>
-              <StatChip label="FastAPI endpoints shipped" value="10+" />
+              <StatChip label={`Project${projectCount === 1 ? "" : "s"} shipped`} value={String(projectCount)} />
             </Reveal>
           </BentoCell>
           <BentoCell span="1x1">
             <Reveal delay={0.05}>
-              <StatChip label="DB response time improvement" value="~30%" />
+              <StatChip
+                label={`Client project${clientProjectCount === 1 ? "" : "s"} delivered`}
+                value={String(clientProjectCount)}
+              />
             </Reveal>
           </BentoCell>
           <BentoCell span="1x1">
             <Reveal delay={0.1}>
-              <StatChip label="Production issues resolved" value="15+" />
+              <StatChip label="Live in production" value={String(liveProjectCount)} />
             </Reveal>
           </BentoCell>
           <BentoCell span="1x1">
