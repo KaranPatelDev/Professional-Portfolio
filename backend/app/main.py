@@ -13,7 +13,6 @@ from app.routers import (
     build_log,
     contact,
     content,
-    demo,
     experience,
     media,
     projects,
@@ -36,10 +35,6 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    # Browsers hide non-simple response headers from fetch() unless the
-    # server explicitly exposes them — needed for the rate-limit demo widget
-    # to read its live remaining/reset counters.
-    expose_headers=["X-RateLimit-Limit", "X-RateLimit-Remaining", "X-RateLimit-Reset", "Retry-After"],
 )
 
 
@@ -66,4 +61,3 @@ app.include_router(media.router)
 app.include_router(build_log.router)
 app.include_router(whoami.router)
 app.include_router(status.router)
-app.include_router(demo.router)

@@ -9,7 +9,6 @@ import { Card, PrimaryButton, RichText, StatChip, StatusDot, Tag } from "@/compo
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
 import InteractiveTerminal from "@/components/InteractiveTerminal";
-import RateLimitDemo from "@/components/RateLimitDemo";
 import { stripHtml } from "@/lib/text";
 import Link from "next/link";
 
@@ -194,16 +193,6 @@ export default async function Home() {
             </BentoCell>
           )}
         </BentoGrid>
-        </div>
-      </section>
-
-      {/* Break my rate limiter — a real, live defensive-engineering demo,
-          deserves its own space rather than being crammed into the bento grid */}
-      <section className="w-full py-10 border-t border-border">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <Reveal>
-            <RateLimitDemo />
-          </Reveal>
         </div>
       </section>
     </div>
