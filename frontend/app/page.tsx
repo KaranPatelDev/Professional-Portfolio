@@ -8,7 +8,7 @@ import {
 import { Card, GhostButton, PrimaryButton, RichText, StatChip, StatusDot, Tag } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
-import RequestFlowDiagram from "@/components/RequestFlowDiagram";
+import TerminalIntro from "@/components/TerminalIntro";
 import Link from "next/link";
 
 function contentValue(blocks: { key: string; value_html: string }[], key: string, fallback: string) {
@@ -65,7 +65,7 @@ export default async function Home() {
           </Reveal>
           <Reveal delay={0.15} className="relative z-10">
             <Card featured>
-              <RequestFlowDiagram />
+              <TerminalIntro />
             </Card>
           </Reveal>
         </div>

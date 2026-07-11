@@ -202,25 +202,28 @@ body {
   }
 }
 
-/* Animated request-flow diagram connectors — a traveling dash pattern to
-   suggest data actually moving through the pipeline. */
-.flow-line {
-  fill: none;
-  stroke: var(--color-text-secondary);
-  stroke-width: 1.5;
-  stroke-dasharray: 4 4;
-  animation: flow-dash 1.2s linear infinite;
+/* Terminal-intro boot-sequence lines: staggered fade/slide-in via
+   animation-delay set inline per line (see TerminalIntro.tsx). */
+.terminal-line {
+  opacity: 0;
+  animation: terminal-line-in 0.4s ease-out forwards;
 }
 
-@keyframes flow-dash {
+@keyframes terminal-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
   to {
-    stroke-dashoffset: -16;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .flow-line {
+  .terminal-line {
     animation: none;
+    opacity: 1;
   }
 }
 

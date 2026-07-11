@@ -3,9 +3,6 @@
 import { useState } from "react";
 import { submitContact } from "@/lib/api";
 
-const BUDGETS = ["<$1k", "$1k–3k", "$3k–8k", "$8k+", "Not sure yet"];
-const TIMELINES = ["ASAP", "Within a month", "1–3 months", "Flexible"];
-
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
 
@@ -78,38 +75,28 @@ export default function ContactForm() {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="budget_range" className="block text-sm text-text-secondary mb-1">
             Budget range
           </label>
-          <select
+          <input
             id="budget_range"
             name="budget_range"
-            className="w-full bg-surface border border-border rounded-[var(--radius-button)] px-3 py-2"
-          >
-            {BUDGETS.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-          </select>
+            placeholder="e.g. $1k–3k"
+            className="w-full bg-surface border border-border rounded-[var(--radius-button)] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
+          />
         </div>
         <div>
           <label htmlFor="timeline" className="block text-sm text-text-secondary mb-1">
             Timeline
           </label>
-          <select
+          <input
             id="timeline"
             name="timeline"
-            className="w-full bg-surface border border-border rounded-[var(--radius-button)] px-3 py-2"
-          >
-            {TIMELINES.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
+            placeholder="e.g. 1–3 months"
+            className="w-full bg-surface border border-border rounded-[var(--radius-button)] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
+          />
         </div>
       </div>
 
