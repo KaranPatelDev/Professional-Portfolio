@@ -9,6 +9,7 @@ import { getResume } from "@/lib/api";
 import { triggerResumeDownload } from "./ResumeDownloadButton";
 
 const LINKS = [
+  { href: "/about", label: "About" },
   { href: "/experience", label: "Experience" },
   { href: "/projects", label: "Projects" },
   { href: "/build-log", label: "Build Log" },
