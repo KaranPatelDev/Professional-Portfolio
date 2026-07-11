@@ -1,5 +1,6 @@
 import type {
   Availability,
+  BuildLogPost,
   ContactRequest,
   Experience,
   Project,
@@ -42,6 +43,8 @@ export const getContentBlocks = () => apiFetch<SiteContent[]>("/api/content");
 export const getContentBlock = (key: string) => apiFetch<SiteContent>(`/api/content/${key}`);
 export const getAvailability = () => apiFetch<Availability>("/api/availability");
 export const getResume = () => apiFetch<Resume>("/api/resume");
+export const getBuildLogPosts = () => apiFetch<BuildLogPost[]>("/api/build-log");
+export const getBuildLogPost = (slug: string) => apiFetch<BuildLogPost>(`/api/build-log/${slug}`);
 
 // ---- Public writes ----
 export const submitContact = (body: {
@@ -66,6 +69,7 @@ export const adminMe = () => apiFetch<{ ok: true }>("/api/admin/me");
 export const adminListAllServices = () => apiFetch<Service[]>("/api/services/all");
 export const adminListAllTestimonials = () => apiFetch<Testimonial[]>("/api/testimonials/all");
 export const adminListContactRequests = () => apiFetch<ContactRequest[]>("/api/admin/contact-requests");
+export const adminListAllBuildLogPosts = () => apiFetch<BuildLogPost[]>("/api/build-log/all");
 
 export function adminSave<T>(path: string, method: "POST" | "PUT", body: unknown): Promise<T> {
   return apiFetch<T>(path, { method, body: JSON.stringify(body) });

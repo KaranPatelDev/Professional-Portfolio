@@ -100,6 +100,18 @@ class Resume(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
 
+class BuildLogPost(Base):
+    __tablename__ = "build_log_posts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    slug: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    title: Mapped[str] = mapped_column(String(255))
+    summary: Mapped[str | None] = mapped_column(Text, nullable=True)
+    body_html: Mapped[str] = mapped_column(Text, default="")
+    published: Mapped[bool] = mapped_column(Boolean, default=True)
+    published_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
 class ContactRequest(Base):
     __tablename__ = "contact_requests"
 

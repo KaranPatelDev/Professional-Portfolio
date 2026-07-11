@@ -2,6 +2,8 @@ import { getProject } from "@/lib/api";
 import { Card, GhostButton, PrimaryButton, RichText, Tag } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
+import ScrollProgress from "@/components/ScrollProgress";
+import { estimateReadingTime } from "@/lib/readingTime";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -31,10 +33,12 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16">
+      <ScrollProgress />
       <Reveal>
         <div className="flex items-center gap-2 mb-4">
           <Tag>{project.tags.replace("_", " ")}</Tag>
           <Tag>{project.status}</Tag>
+          {project.body_html && <span className="text-xs text-text-secondary font-mono">{estimateReadingTime(project.body_html)}</span>}
         </div>
         <h1 className="font-heading text-4xl md:text-5xl font-semibold tracking-tight mb-4">{project.title}</h1>
         <p className="text-text-secondary text-lg mb-8 max-w-xl">{project.summary}</p>

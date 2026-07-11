@@ -89,6 +89,20 @@ class SiteContentOut(SiteContentBase):
     id: int
 
 
+class BuildLogPostBase(BaseModel):
+    slug: str
+    title: str
+    summary: str | None = None
+    body_html: str = ""
+    published: bool = True
+
+
+class BuildLogPostOut(BuildLogPostBase):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    published_at: datetime
+
+
 class AvailabilityOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     status_text: str

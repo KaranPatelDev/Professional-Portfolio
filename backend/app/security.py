@@ -16,7 +16,10 @@ ALLOWED_ATTRS = {"a": {"href", "target", "rel"}, "img": {"src", "alt"}}
 
 
 def sanitize_html(raw_html: str) -> str:
-    return nh3.clean(raw_html, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRS)
+    # link_rel=None: nh3 auto-injects rel="noopener noreferrer" on every <a> by
+    # default, which conflicts with also declaring "rel" in ALLOWED_ATTRS
+    # ourselves (raises ValueError). We manage rel/target explicitly instead.
+    return nh3.clean(raw_html, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRS, link_rel=None)
 
 
 def verify_admin_credentials(username: str, password: str) -> bool:

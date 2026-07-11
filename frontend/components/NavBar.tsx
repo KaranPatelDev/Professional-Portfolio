@@ -9,12 +9,17 @@ import ThemeToggle from "./ThemeToggle";
 const LINKS = [
   { href: "/experience", label: "Experience" },
   { href: "/projects", label: "Projects" },
+  { href: "/build-log", label: "Build Log" },
   { href: "/work-with-me", label: "Work With Me" },
   { href: "/contact", label: "Contact" },
 ];
 
 function isMac() {
   return typeof navigator !== "undefined" && /Mac/.test(navigator.platform);
+}
+
+function isActive(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export default function NavBar() {
@@ -52,7 +57,7 @@ export default function NavBar() {
 
         <ul className="hidden md:flex items-center gap-6 text-sm text-text-secondary">
           {LINKS.map((link) => {
-            const active = pathname === link.href;
+            const active = isActive(pathname, link.href);
             return (
               <li key={link.href} className="relative">
                 <Link href={link.href} className={`transition-colors ${active ? "text-accent" : "hover:text-accent"}`}>
@@ -90,7 +95,7 @@ export default function NavBar() {
       {menuOpen && (
         <ul className="md:hidden glass-surface border-t border-border px-4 py-3 space-y-1">
           {LINKS.map((link) => {
-            const active = pathname === link.href;
+            const active = isActive(pathname, link.href);
             return (
               <li key={link.href}>
                 <Link

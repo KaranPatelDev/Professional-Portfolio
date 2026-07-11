@@ -1,7 +1,8 @@
-import { getContentBlocks, getServices } from "@/lib/api";
+import { getContentBlocks, getServices, getTestimonials } from "@/lib/api";
 import { Card, PageTitle, PrimaryButton, RichText } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,9 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default async function WorkWithMePage() {
-  const [services, content] = await Promise.all([
+  const [services, content, testimonials] = await Promise.all([
     getServices().catch(() => []),
     getContentBlocks().catch(() => []),
+    getTestimonials().catch(() => []),
   ]);
   const pitch = content.find((c) => c.key === "freelance_pitch")?.value_html;
 
@@ -56,6 +58,13 @@ export default async function WorkWithMePage() {
             </BentoCell>
           ))}
       </BentoGrid>
+
+      {testimonials.length > 0 && (
+        <Reveal delay={0.15} className="max-w-3xl mx-auto mb-12">
+          <h2 className="font-heading text-2xl font-semibold mb-4">What clients say</h2>
+          <TestimonialCarousel testimonials={testimonials} />
+        </Reveal>
+      )}
 
       <Reveal delay={0.2}>
         <Card className="text-center py-10 max-w-3xl mx-auto">

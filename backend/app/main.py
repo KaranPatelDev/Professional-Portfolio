@@ -10,6 +10,7 @@ from app.rate_limit import limiter
 from app.routers import (
     admin_auth,
     availability,
+    build_log,
     contact,
     content,
     experience,
@@ -55,3 +56,4 @@ app.include_router(availability.router)
 app.include_router(resume.router)
 app.include_router(contact.router)
 app.include_router(media.router)
+app.include_router(build_log.router)

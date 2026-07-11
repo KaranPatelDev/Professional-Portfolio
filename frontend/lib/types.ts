@@ -71,6 +71,16 @@ export type Resume = {
   updated_at: string;
 };
 
+export type BuildLogPost = {
+  id: number;
+  slug: string;
+  title: string;
+  summary: string | null;
+  body_html: string;
+  published: boolean;
+  published_at: string;
+};
+
 export type ContactRequest = {
   id: number;
   name: string;

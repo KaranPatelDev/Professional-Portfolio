@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/admin/experience", label: "Experience" },
   { href: "/admin/testimonials", label: "Testimonials" },
   { href: "/admin/services", label: "Services" },
+  { href: "/admin/build-log", label: "Build Log" },
   { href: "/admin/content", label: "Site Content" },
   { href: "/admin/availability", label: "Availability" },
   { href: "/admin/resume", label: "Resume" },
