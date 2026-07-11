@@ -109,7 +109,7 @@ SERVICES = [
         client_problem="Our backend is fragile / we need one built",
         deliverable="FastAPI/Django backend, validated APIs",
         stack=["FastAPI", "Pydantic", "PostgreSQL"],
-        proof="Magenta Connects, D&D Purchase",
+        proof="BonsAI Agents, D&D Purchase",
         public=True,
         display_order=0,
     ),

@@ -157,8 +157,8 @@ export default function InteractiveTerminal() {
       print([{ text: step, tone: "check" }]);
     }
     await delay(420);
-    print([{ text: "Live ✓ — see status below ↓", tone: "accent" }]);
-    document.getElementById("status-widget")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    print([{ text: "Live ✓ — confirming with the real backend…", tone: "accent" }]);
+    await runStatus();
   }
 
   async function runWhoami() {
