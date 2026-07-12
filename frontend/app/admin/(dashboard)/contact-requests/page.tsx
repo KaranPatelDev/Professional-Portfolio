@@ -28,8 +28,13 @@ export default function AdminContactRequestsPage() {
           <Card key={r.id}>
             <div className="flex items-start justify-between">
               <div>
-                <p className="font-heading">
+                <p className="font-heading flex items-center gap-2">
                   {r.name} &mdash; <a href={`mailto:${r.email}`} className="text-accent">{r.email}</a>
+                  {!r.email_sent && (
+                    <span className="text-xs font-mono text-error bg-error/10 border border-error/30 rounded px-2 py-0.5">
+                      Email notification failed — reply directly
+                    </span>
+                  )}
                 </p>
                 <p className="text-text-secondary text-xs mb-2">
                   {new Date(r.created_at).toLocaleString()} · {r.budget_range || "n/a"} · {r.timeline || "n/a"}

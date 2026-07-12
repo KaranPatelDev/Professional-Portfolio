@@ -125,4 +125,5 @@ export type ContactRequest = {
   budget_range: string | null;
   timeline: string | null;
   created_at: string;
+  email_sent: boolean;
 };

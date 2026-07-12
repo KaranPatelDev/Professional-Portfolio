@@ -37,6 +37,9 @@ def submit_contact(request: Request, body: ContactCreate, db: Session = Depends(
         send_contact_notification(body.name, body.email, body.message, body.budget_range, body.timeline)
     except Exception:
         logger.exception("Failed to send contact notification email")
+        entry.email_sent = False
+        db.commit()
+        db.refresh(entry)
 
     return entry
 

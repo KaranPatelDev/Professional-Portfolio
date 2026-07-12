@@ -16,6 +16,7 @@ STATEMENTS = [
     "ALTER TABLE projects ADD COLUMN IF NOT EXISTS freelance_status VARCHAR(50)",
     "ALTER TABLE build_log_posts ADD COLUMN IF NOT EXISTS github_repo VARCHAR(255)",
     "ALTER TABLE projects ADD COLUMN IF NOT EXISTS hidden BOOLEAN DEFAULT false",
+    "ALTER TABLE contact_requests ADD COLUMN IF NOT EXISTS email_sent BOOLEAN DEFAULT true",
 ]
 
 with engine.begin() as conn:

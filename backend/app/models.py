@@ -137,3 +137,7 @@ class ContactRequest(Base):
     budget_range: Mapped[str | None] = mapped_column(String(50), nullable=True)
     timeline: Mapped[str | None] = mapped_column(String(50), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), index=True)
+    # SMTP notification can fail independent of the DB write (e.g. Render
+    # blocks outbound SMTP ports) — surfaced here so the admin knows to check
+    # this list directly instead of trusting their inbox.
+    email_sent: Mapped[bool] = mapped_column(Boolean, default=True)

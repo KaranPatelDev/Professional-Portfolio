@@ -162,6 +162,7 @@ class ContactOut(BaseModel):
     budget_range: str | None
     timeline: str | None
     created_at: datetime
+    email_sent: bool
 
 
 class LoginRequest(BaseModel):
