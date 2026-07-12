@@ -9,6 +9,13 @@ import type { Metadata } from "next";
 
 type Props = { params: Promise<{ slug: string }> };
 
+// Guards against an admin-entered external URL missing its protocol (e.g.
+// "www.example.com") — without this, Next's <Link> treats it as an internal
+// relative route and 404s instead of navigating offsite.
+function externalUrl(url: string) {
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   try {
@@ -68,8 +75,8 @@ export default async function ProjectPage({ params }: Props) {
           </BentoCell>
           <BentoCell span="4x1">
             <Card className="h-full flex flex-wrap items-center gap-3">
-              {project.live_url && <PrimaryButton href={project.live_url}>View live site &rarr;</PrimaryButton>}
-              {project.github_url && <GhostButton href={project.github_url}>View code</GhostButton>}
+              {project.live_url && <PrimaryButton href={externalUrl(project.live_url)}>View live site &rarr;</PrimaryButton>}
+              {project.github_url && <GhostButton href={externalUrl(project.github_url)}>View code</GhostButton>}
               <GhostButton href="/work-with-me">Discuss a similar project</GhostButton>
             </Card>
           </BentoCell>
