@@ -68,6 +68,7 @@ export default function CommandPalette() {
       label="Command palette"
       overlayClassName="fixed inset-0 z-[100] bg-black/50"
       contentClassName="fixed top-24 left-1/2 -translate-x-1/2 z-[101] w-full max-w-lg mx-4 max-h-[70vh] flex flex-col glass-surface border border-border rounded-[var(--radius-card)] overflow-hidden shadow-2xl"
+      className="flex flex-col min-h-0 flex-1"
     >
       <CommandInput
         autoFocus
