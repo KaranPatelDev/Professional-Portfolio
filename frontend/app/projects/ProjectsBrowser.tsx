@@ -9,9 +9,16 @@ import Reveal from "@/components/Reveal";
 
 const CATEGORIES = ["All", "Client Work", "Personal Projects"];
 
+function normalizeCategory(value: string) {
+  // Tolerate singular/plural mismatches ("Personal Project" vs "Personal
+  // Projects") since the admin form's free-text category field has no
+  // enforced vocabulary.
+  return value.trim().toLowerCase().replace(/s$/, "");
+}
+
 function matchesCategory(project: Project, category: string) {
   if (category === "All") return true;
-  return project.category.trim().toLowerCase() === category.toLowerCase();
+  return normalizeCategory(project.category) === normalizeCategory(category);
 }
 
 export default function ProjectsBrowser({ projects }: { projects: Project[] }) {
