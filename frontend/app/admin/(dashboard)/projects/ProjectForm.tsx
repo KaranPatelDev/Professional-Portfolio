@@ -9,6 +9,17 @@ import RichTextEditor from "@/components/admin/RichTextEditor";
 
 type FormState = Omit<Project, "id" | "created_at" | "updated_at">;
 
+// Guards against pasting a live/demo URL into the slug field (breaks the
+// /projects/[slug] route) — strips protocol/domain and non-URL-safe chars.
+function slugify(value: string) {
+  return value
+    .trim()
+    .replace(/^https?:\/\/[^/]+\/?/i, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 const EMPTY: FormState = {
   slug: "",
   title: "",
@@ -76,8 +87,13 @@ export default function ProjectForm({ project }: { project?: Project }) {
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Field label="Slug (URL, unique)">
-          <Input value={form.slug} onChange={(e) => set("slug", e.target.value)} required />
+        <Field label="Slug (URL, unique — e.g. payguard-ai, not a live link)">
+          <Input
+            value={form.slug}
+            onChange={(e) => set("slug", e.target.value)}
+            onBlur={(e) => set("slug", slugify(e.target.value))}
+            required
+          />
         </Field>
         <Field label="Title">
           <Input value={form.title} onChange={(e) => set("title", e.target.value)} required />
