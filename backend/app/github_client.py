@@ -20,7 +20,9 @@ def fetch_commits(repo: str, limit: int = 10) -> list[dict]:
         resp = httpx.get(
             f"https://api.github.com/repos/{repo}/commits",
             params={"per_page": limit},
-            headers={"Accept": "application/vnd.github+json"},
+            # GitHub's API rejects requests with no User-Agent (403), and some
+            # hosts don't set one by default the way local dev environments do.
+            headers={"Accept": "application/vnd.github+json", "User-Agent": "professional-portfolio-app"},
             timeout=8.0,
         )
     except httpx.HTTPError as exc:
@@ -29,7 +31,7 @@ def fetch_commits(repo: str, limit: int = 10) -> list[dict]:
     if resp.status_code == 404:
         raise HTTPException(404, f"GitHub repo '{repo}' not found or private")
     if resp.status_code != 200:
-        raise HTTPException(502, "GitHub API error")
+        raise HTTPException(502, f"GitHub API error: {resp.status_code} {resp.text[:200]}")
 
     commits = [
         {
