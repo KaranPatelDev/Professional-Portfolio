@@ -58,7 +58,13 @@ export default function CommandPalette() {
   // typing "python", "freelance", "fullstack", "reactjs", etc. surfaces any
   // project that actually mentions it, not just ones matching the title.
   function projectKeywords(p: Project): string[] {
-    return [p.summary, p.role ?? "", p.category, p.tags.replace("_", " "), ...p.stack, stripHtml(p.body_html)];
+    const keywords = [p.summary, p.role ?? "", p.category, p.tags.replace("_", " "), ...p.stack, stripHtml(p.body_html)];
+    // "Freelance" and "Client Work" mean the same thing here — searching
+    // either term should surface these projects, not just the exact label.
+    if (p.tags === "client_work" || p.category.trim().toLowerCase() === "client work") {
+      keywords.push("freelance");
+    }
+    return keywords;
   }
 
   return (
