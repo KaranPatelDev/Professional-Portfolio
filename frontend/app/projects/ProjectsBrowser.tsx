@@ -7,7 +7,7 @@ import { Card, Tag } from "@/components/ui";
 import { BentoGrid, BentoCell } from "@/components/BentoGrid";
 import Reveal from "@/components/Reveal";
 
-const CATEGORIES = ["All", "Client Work", "Personal Projects", "Fullstack", "Backend", "SaaS Product"];
+const CATEGORIES = ["All", "Client Work", "Personal Projects"];
 
 function matchesCategory(project: Project, category: string) {
   if (category === "All") return true;
