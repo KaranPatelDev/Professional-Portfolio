@@ -19,7 +19,7 @@ export default async function ResumePage() {
             fileUrl={resume.file_url}
             className="group relative inline-flex items-center gap-1.5 overflow-hidden rounded-full bg-gradient-to-r from-accent to-indigo-500 px-5 py-2.5 text-sm font-medium text-white shadow-md shadow-accent/20 transition-all duration-300 hover:scale-[1.04] hover:shadow-xl hover:shadow-accent/40 active:scale-[0.98]"
           >
-            Download Resume (PDF)
+            View Resume (PDF)
           </ResumeDownloadButton>
         ) : (
           <p className="text-text-secondary">Resume not uploaded yet — check back soon.</p>

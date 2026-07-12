@@ -1,17 +1,13 @@
 "use client";
 
 import { trackResumeDownload } from "@/lib/api";
-import { toAttachmentUrl } from "@/lib/cloudinary";
 import { RESUME_DOWNLOADED_EVENT } from "./ResumeDownloadToast";
 
+// Opens the resume in a new tab rather than forcing a download — the
+// forced-download path (Cloudinary fl_attachment + <a download>) was
+// unreliable cross-origin and left users with a broken/unrecognized file.
 export function triggerResumeDownload(fileUrl: string) {
-  const link = document.createElement("a");
-  link.href = toAttachmentUrl(fileUrl);
-  link.download = "Karan-Patel-Resume.pdf";
-  link.rel = "noopener noreferrer";
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
+  window.open(fileUrl, "_blank", "noopener,noreferrer");
 
   trackResumeDownload(typeof window !== "undefined" ? window.location.pathname : undefined).catch(() => {});
   window.dispatchEvent(new CustomEvent(RESUME_DOWNLOADED_EVENT));

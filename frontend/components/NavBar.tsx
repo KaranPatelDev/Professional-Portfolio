@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Download, Menu, Search, X } from "lucide-react";
+import { FileText, Menu, Search, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { getResume } from "@/lib/api";
 import { triggerResumeDownload } from "./ResumeDownloadButton";
@@ -93,11 +93,11 @@ export default function NavBar() {
           {resumeUrl && (
             <button
               onClick={() => triggerResumeDownload(resumeUrl)}
-              aria-label="Download resume (PDF)"
-              title="Download resume (PDF)"
+              aria-label="View resume (PDF)"
+              title="View resume (PDF)"
               className="p-2 text-text-secondary hover:text-accent transition-colors"
             >
-              <Download size={18} />
+              <FileText size={18} />
             </button>
           )}
           <ThemeToggle />
