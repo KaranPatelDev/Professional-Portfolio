@@ -9,6 +9,14 @@ import { Card } from "@/components/ui";
 
 type FormState = Omit<BuildLogPost, "id" | "published_at">;
 
+// Guards against pasting a full GitHub URL instead of "owner/repo" — the
+// commits API call is built from this value directly and fails silently
+// (commit timeline just never renders) if it's not in that exact format.
+function toOwnerRepo(value: string) {
+  const match = value.match(/github\.com\/([^/]+\/[^/]+?)(?:\.git)?\/?$/i);
+  return match ? match[1] : value.trim();
+}
+
 export default function BuildLogForm({ post, onSaved }: { post?: BuildLogPost; onSaved: () => void }) {
   const [form, setForm] = useState<FormState>(
     post ?? { slug: "", title: "", summary: "", body_html: "", published: true, github_repo: null }
@@ -55,6 +63,7 @@ export default function BuildLogForm({ post, onSaved }: { post?: BuildLogPost; o
           <Input
             value={form.github_repo ?? ""}
             onChange={(e) => set("github_repo", e.target.value || null)}
+            onBlur={(e) => set("github_repo", e.target.value ? toOwnerRepo(e.target.value) : null)}
             placeholder="e.g. KaranPatelDev/portfolio"
           />
         </Field>
